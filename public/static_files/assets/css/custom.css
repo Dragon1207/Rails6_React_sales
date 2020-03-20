@@ -1,0 +1,139 @@
+/* Footer styling*/
+footer {
+  padding-top: 30px;
+}
+
+/* navigation bar styling*/
+.navbar {
+  background: #6147CB;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.navbar .navbar-brand {
+  color: #ffffff;
+  font-size: 3em;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #ffffff;
+  font-size: 1.2em;
+}
+
+@media (max-width: 575px) {
+  .jumbotron > h1 {
+    font-size: 1.5rem;
+  }
+  .jumbotron > p {
+    font-size: 1.0rem;
+  }
+  font-size: 0.6rem;
+}
+
+@media (max-width: 768px) {
+  .jumbotron > h1 {
+    font-size: 1.7rem;
+  }
+  .jumbotron > p {
+    font-size: 1.1rem;
+  }
+  font-size: 0.4rem;
+}
+
+
+a.navbar-brand.goog:hover, .navbar-light .navbar-nav .nav-link:hover {
+  color: red;
+}
+
+.goog {
+  font-family: 'Oleo Script', cursive;
+}
+
+.form-header-style {
+  color: #6147CB;
+  background: #ffffff;
+}
+
+.form-header-style, .form-body-style {
+  border: 1px solid #6147CB;
+}
+
+/* Jumbotron Styling*/
+h1.jumbo-heading {
+  font-size: 380%;
+}
+
+span.goog {
+  color: #ff0000;
+}
+
+img {
+  margin-bottom: 20px;
+}
+
+.badge {
+  background: #096ad0;
+  font-size: 70%;
+}
+
+.comment-block {
+  border-top: 1px solid #6147CB;
+}
+
+.comment-header {
+  color: #6147CB;
+}
+
+.comment-body {
+  font-style: italic;
+}
+
+ /*Forms styling*/
+.panel-div {
+  margin-top: 30px;
+}
+
+.form-heading {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 200%;
+}
+
+ /*Form error message styling*/
+#error_explanation {
+  background-color: #f2dede;
+  color: #a94442;
+  text-align: left;
+  padding: 5px 20px;
+  margin-bottom: 30px;
+}
+
+#error_explanation h5 {
+  font-size: 150%;
+}
+
+.btn-outline-purple {
+  border: 1px solid #6147CB;
+  color: #6147CB;
+}
+
+.btn-outline-purple:hover, .badge-purple {
+  background-color: #6147CB;
+  color: #ffffff;
+}
+
+h5.card-title > span.badge {
+  padding: 0.5em 0.5em;
+}
+
+h5.card-title a:hover {
+  color: #ffffff;
+  background-color: #6147CB;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  border-radius: 0.45em;
+}
+
+li.nav-item p.navbar-text {
+  color: #ff0000;
+}
