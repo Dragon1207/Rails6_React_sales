@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light ">
-  <a class="navbar-brand goog" href="index.html">O-Sale</a>
+
+  <%= link_to 'O-Sale', 'index.html', class: 'navbar-brand goog' %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,16 +8,19 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+        <%= link_to  root_path, class: 'nav-link' do %>
+           Home <span></span>
+        <% end %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="new-item.html">New Product</a>
+        <%= link_to 'New Product', "new-item.html", class: 'nav-link' %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="login.html">Sign In</a>
+        <%= link_to 'Sign In', "login.html", class: 'nav-link' %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="register.html">Sign Up</a>
+        <%= link_to 'Sign Up', "register.html", class: 'nav-link' %>
+
       </li>
     </ul>
   </div>
