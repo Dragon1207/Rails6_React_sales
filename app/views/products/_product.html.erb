@@ -4,8 +4,8 @@
     <div class="card-body">
       <h5 class="card-title">
         <span class="badge badge-pill badge-purple float-right"><%= number_to_currency(product[:price]) %></span>
-        <%= link_to product[:name], "detail-page.html" %>
-        
+        <%= link_to product[:name], product_path(product.id) %>
+
       </h5>
       <p class="card-text">
           <%= truncate(product[:description], length: 150) %>

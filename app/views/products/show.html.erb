@@ -1,0 +1,30 @@
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 offset-md-1">
+          <img class="img-fluid" src="http://placehold.it/350x150" width="100%">
+        </div>
+
+        <div class="col-md-10 offset-md-1">
+          <div class="float-right">
+            <h3><span class="badge badge-pill badge-purple"><%= number_to_currency(@product.price) %></span></h3>
+          </div>
+          <div>
+            <h3><%= @product.name %></h3>
+          </div>
+
+          <div class="mb-4">
+            <%= @product.description %>
+          </div>
+
+          <div class="float-right btn-edit-del">
+            <a href="#" class="btn btn-outline-danger btn-lg">Delete</a>
+          </div>
+
+          <div class="btn-edit-del">
+            <a href="#" class="btn btn-outline-purple btn-lg">Edit</a>
+          </div>
+        </div>
+      </div>
+     </div>
