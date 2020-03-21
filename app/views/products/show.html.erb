@@ -19,7 +19,8 @@
           </div>
 
           <div class="float-right btn-edit-del">
-            <a href="#" class="btn btn-outline-danger btn-lg">Delete</a>
+            <%= link_to 'Delete', product_path(@product), method: :delete, data: {confirm: 'Are you sure you want to delete this product?' }, class: 'btn btn-outline-danger btn-lg' %>
+
           </div>
 
           <div class="btn-edit-del">
