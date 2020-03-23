@@ -14,6 +14,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    cookies.delete :user_id
+    flash[:notice] = 'You have logged out'
+    redirect_to root_path
+  end
+
   private
 
   def user_params
