@@ -1,6 +1,8 @@
 <div class="form-body-style px-5 pt-4">
 
   <%= form_with model: @product, local: true do |f| %>
+    <%= render 'shared/error_messages', object: @product %>
+
     <div class="form-group row">
       <div class="col-md-3 col-form-label">
         <%= f.label :name %>
