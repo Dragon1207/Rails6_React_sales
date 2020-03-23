@@ -1,11 +1,17 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new
+    if current_user
+      flash[:notice] = 'You have already signed up'
+      redirect_to root_path
+    else
+      @user = User.new
+    end
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
+      cookies.signed[:user_id] = @user.id
       flash[:notice] = 'Sign up successfully'
       redirect_to root_path
     else
@@ -14,11 +20,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    cookies.delete :user_id
-    flash[:notice] = 'You have logged out'
-    redirect_to root_path
-  end
+  
 
   private
 
