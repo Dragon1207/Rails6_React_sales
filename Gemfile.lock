@@ -92,6 +92,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    pg (1.1.4)
     puma (4.3.3)
       nio4r (~> 2.0)
     rack (2.2.2)
@@ -183,6 +184,7 @@ DEPENDENCIES
   byebug
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
+  pg
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.1)
   sass-rails (>= 6)
