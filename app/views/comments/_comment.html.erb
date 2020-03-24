@@ -1,0 +1,9 @@
+<div class="col-md-10 offset-md-1 mt-4">
+  <div class="comment-body mb-2 mt-3">
+    <%= comment.body %>
+  </div>
+  <small>
+    <em>Created <span><%= "#{time_ago_in_words(comment.created_at)}" %></span> ago by: </em>
+    <%= "#{commented_by comment.user}" %>
+  </small>
+</div>

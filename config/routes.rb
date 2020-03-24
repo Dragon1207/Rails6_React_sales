@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   resources :users, only: [:create]
   root to: 'products#index'
 
-  resources :products
+  resources :products do
+    resources :comments, only: [:create]
+  end
 
 end

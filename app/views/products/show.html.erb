@@ -28,4 +28,13 @@
         <% end %>
         </div>
       </div>
-     </div>
+      <%= render partial: 'comments/form', locals: { product: @product, comment: @comment } %>
+      <div class="row">
+        <div class="col-md-10 offset-md-1 mt-4">
+          <h2 class="comment-header">Customer comments (3)</h2>
+        </div>
+        <% @comments.reject { |cmt| cmt.new_record? }.each do |comment| %>
+          <%= render partial: 'comments/comment', object: comment  %>
+        <% end %>
+      </div>
+   </div>

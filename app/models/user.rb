@@ -10,6 +10,10 @@ class User < ApplicationRecord
 
   has_many :products, dependent: :destroy
 
+  def fullname
+    "#{first_name} #{last_name}"
+  end
+
   private
 
   def downcase_email
