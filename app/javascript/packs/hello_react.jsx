@@ -10,6 +10,29 @@ const Hello = props => (
   <div>Hello {props.name}!</div>
 )
 
+1. App Wrapper
+2. Navigation bar/header
+3. Jumbotron
+4. Product List
+5. Product
+6. Footer
+
+Components
+Containers
+Shared
+
+
+// class Hello extends React.Component {
+//   constructor(props){
+//     super(props)
+//   }
+//   render(){
+//     return (
+//       <div>Hello {this.props.name}!</div>
+//     )
+//   }
+// }
+
 Hello.defaultProps = {
   name: 'David'
 }
@@ -21,6 +44,7 @@ Hello.propTypes = {
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     <Hello name="React" />,
-    document.body.appendChild(document.createElement('div')),
+    // document.body.appendChild(document.createElement('div')),
+    document.getElementById('root'),
   )
 })
