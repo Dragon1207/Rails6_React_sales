@@ -6,8 +6,7 @@ import Jumbotron from '../components/products/Jumbotron'
 import ProductList from './ProductsContainer'
 
 const App = () => (
-  <div>
-    App Component
+  <div>    
     <Header />
     <Jumbotron />
     <ProductList />
