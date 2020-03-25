@@ -17,5 +17,16 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 import "bootstrap"
 // import $ from 'jquery';
-
 // import {$, JQuery} from 'jquery';
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+
+import App from '../containers/App'
+
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.getElementById('root')
+
+  ReactDOM.render(<App />,root)
+})
