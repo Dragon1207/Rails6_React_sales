@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Product = ({ product }) => (
   <div className="col-md-4 col-sm-6 col-xs-12 mb-4">
@@ -17,4 +18,7 @@ const Product = ({ product }) => (
   </div>
 )
 
+Product.propTypes = {
+  product: PropTypes.object.isRequired
+}
 export default Product
