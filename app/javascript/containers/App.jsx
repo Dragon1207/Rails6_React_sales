@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import Header from '../components/shared/Header'
 import Footer from '../components/shared/Footer'
@@ -10,9 +10,10 @@ const App = () => (
   <BrowserRouter>
     <React.Fragment>
       <Header />
-      <Jumbotron />
-      <ProductList />
-      <Footer />    
+      <Switch>
+        <Route exact path='/' component={ProductList}/>        
+      </Switch>
+      <Footer />
     </React.Fragment>
   </BrowserRouter>
 )

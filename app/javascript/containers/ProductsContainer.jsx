@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 import Product from '../components/products/Product'
+import Jumbotron from '../components/products/Jumbotron'
 
 class ProductList extends React.Component {
   constructor(props){
@@ -27,21 +28,24 @@ class ProductList extends React.Component {
 
   render(){
     const { products } = this.state
-    const productList = products.map(product => <Product key={product.id} product={product} />) 
+    const productList = products.map(product => <Product key={product.id} product={product} />)
 
 
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12 mb-2">
-            <div className="row">
-              <div className="card-deck">
-                { productList }
+      <React.Fragment>
+        <Jumbotron />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 mb-2">
+              <div className="row">
+                <div className="card-deck">
+                  { productList }
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 

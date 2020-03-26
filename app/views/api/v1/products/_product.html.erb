@@ -4,7 +4,7 @@
     <div class="card-body">
       <h5 class="card-title">
         <span class="badge badge-pill badge-purple float-right"><%= number_to_currency(product[:price]) %></span>
-        <%= link_to product[:name], product_path(product.id) %>
+        <%= link_to product[:name], api_v1_product_path(product.id) %>
 
       </h5>
       <p class="card-text">
