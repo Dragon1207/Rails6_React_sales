@@ -9,7 +9,7 @@ const Product = ({ product }) => (
       <div className="card-body">
         <h5 className="card-title">
           <span className="badge badge-pill badge-purple float-right">{product.price}</span>
-          <Link to={'/detail'}>{ product.name }</Link>          
+          <Link to={`/products/${product.id}`}>{ product.name }</Link>          
         </h5>
         <p className="card-text">
             {product.description}
