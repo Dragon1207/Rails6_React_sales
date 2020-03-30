@@ -15,13 +15,13 @@ const Header = () => (
 
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="new-item.html">New Product</a>
+        <Link to='/' className="nav-link">New Product</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="login.html">Sign In</a>
+        <Link to='/' className="nav-link">Sign In</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="register.html">Sign Up</a>
+        <Link to='/' className="nav-link">Sign Up</Link>          
         </li>
       </ul>
     </div>
