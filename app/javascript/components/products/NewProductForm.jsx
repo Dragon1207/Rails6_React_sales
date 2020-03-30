@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
 
 class NewProductForm extends Component {
-  constructor(props){
-    super(props)
 
-    this.state = {
+    state = {
       name: '',
       description: '',
       price: '',
       quantity: '',
       errors: {}
-    }
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-  }
-  handleSubmit(event){
+      }
+
+  handleSubmit = (event) => {
     event.preventDefault()
     console.log('Handling submit')
     console.log(this.state)
