@@ -1,6 +1,17 @@
 import React, { Component } from 'react'
 
 class NewProductForm extends Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      name: '',
+      description: '',
+      price: '',
+      quantity: '',
+      errors: {}
+    }
+  }
   render(){
     const buttonText = "Create Product"
     const title = "Add New Product"
