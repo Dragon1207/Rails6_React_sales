@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import Product from '../components/products/Product'
 import Jumbotron from '../components/products/Jumbotron'
+import NewProductForm from '../components/products/NewProductForm'
 
 class ProductList extends React.Component {
 
@@ -22,6 +23,9 @@ class ProductList extends React.Component {
       })
       .catch(error => console.log(error.response.data))
   }
+  handleProductSubmit = (data) => {
+    console.log('Submitted in Product List')
+  }
 
   render(){
     const { products } = this.state
@@ -31,6 +35,7 @@ class ProductList extends React.Component {
     return (
       <React.Fragment>
         <Jumbotron />
+        <NewProductForm onSubmit={this.handleProductSubmit} />
         <div className="container">
           <div className="row">
             <div className="col-md-12 mb-2">
