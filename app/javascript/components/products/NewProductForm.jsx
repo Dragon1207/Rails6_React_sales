@@ -12,11 +12,15 @@ class NewProductForm extends Component {
       errors: {}
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   handleSubmit(event){
     event.preventDefault()
     console.log('Handling submit')
     console.log(this.state)
+  }
+  handleChange(event){
+    this.setState({ [event.target.name]: event.target.value } )
   }
   render(){
     const buttonText = "Create Product"
@@ -35,14 +39,14 @@ class NewProductForm extends Component {
                   <div className="form-group row">
                     <label htmlFor="name" className="col-md-3 col-form-label">Name</label>
                     <div className="col-md-9">
-                      <input type="text" name="name" id="name" className="form-control" placeholder="Item name" autoFocus={true} />
+                      <input type="text" name="name" value={this.state.name} onChange={this.handleChange} id="name" className="form-control" placeholder="Item name" autoFocus={true} />
                     </div>
                   </div>
 
                   <div className="form-group row">
                     <label htmlFor="price" className="col-md-3 col-form-label">Price</label>
                     <div className="col-md-9">
-                      <input type="text" name="price" id="price" className="form-control" placeholder="Item price" />
+                      <input type="text" name="price" value={this.state.price} onChange={this.handleChange} id="price" className="form-control" placeholder="Item price" />
                     </div>
                   </div>
 
@@ -51,7 +55,8 @@ class NewProductForm extends Component {
                       Description
                     </label>
                     <div className="col-md-9">
-                      <textarea name="description" id="description" className="form-control" placeholder="Item description here" rows="5"></textarea>
+                      <textarea name="description"
+                      value={this.state.description} onChange={this.handleChange} id="description" className="form-control" placeholder="Item description here" rows="5"></textarea>
                     </div>
                   </div>
 
