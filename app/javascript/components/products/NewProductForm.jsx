@@ -11,6 +11,12 @@ class NewProductForm extends Component {
       quantity: '',
       errors: {}
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  handleSubmit(event){
+    event.preventDefault()
+    console.log('Handling submit')
+    console.log(this.state)
   }
   render(){
     const buttonText = "Create Product"
@@ -25,7 +31,7 @@ class NewProductForm extends Component {
               </h1>
 
               <div className="form-body-style px-5 pt-4">
-                <form>
+                <form className="form-horizontal" onSubmit={this.handleSubmit}>
                   <div className="form-group row">
                     <label htmlFor="name" className="col-md-3 col-form-label">Name</label>
                     <div className="col-md-9">
