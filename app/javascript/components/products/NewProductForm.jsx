@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { inputClasses } from '../../shared/helpers'
+
 class NewProductForm extends Component {
 
     state = {
@@ -33,7 +35,6 @@ class NewProductForm extends Component {
   handleChange =(event) => {
     this.setState({ [event.target.name]: event.target.value } )
   }
-
   checkErrors = (state, fieldName) => {
     const error = {}
 
@@ -61,6 +62,12 @@ class NewProductForm extends Component {
     }
     return error
   }
+  handleBlur = (event) => {
+    const { name } = event.target
+    const fieldError = this.checkErrors(this.state, name)
+    const errors = Object.assign({}, this.state.errors, fieldError)
+    this.setState({ errors })
+  }
   render(){
     const buttonText = "Create Product"
     const title = "Add New Product"
@@ -78,21 +85,22 @@ class NewProductForm extends Component {
                   <div className="form-group row">
                     <label htmlFor="name" className="col-md-3 col-form-label">Name</label>
                     <div className="col-md-9">
-                      <input type="text" name="name" value={this.state.name} onChange={this.handleChange} id="name" className="form-control" placeholder="Item name" autoFocus={true} />
+                      <input type="text" name="name" value={this.state.name} onChange={this.handleChange} onBlur={this.handleBlur} id="name" className={inputClasses("name", this.state)} placeholder="Item name" autoFocus={true} />
+                      {this.state.errors.name ?           <div className='invalid-feedback'> {this.state.errors.name}</div> : null}
                     </div>
                   </div>
 
                   <div className="form-group row">
                     <label htmlFor="price" className="col-md-3 col-form-label">Price</label>
                     <div className="col-md-9">
-                      <input type="text" name="price" value={this.state.price} onChange={this.handleChange} id="price" className="form-control" placeholder="Item price" />
+                      <input type="text" name="price" value={this.state.price} onChange={this.handleChange} onBlur={this.handleBlur} id="price" className="form-control" placeholder="Item price" />
                     </div>
                   </div>
 
                   <div className="form-group row">
                     <label htmlFor="price" className="col-md-3 col-form-label">Quantity</label>
                     <div className="col-md-9">
-                      <input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} id="quantity" className="form-control" placeholder="Item quantity" />
+                      <input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} onBlur={this.handleBlur} id="quantity" className="form-control" placeholder="Item quantity" />
                     </div>
                   </div>
 
@@ -102,7 +110,7 @@ class NewProductForm extends Component {
                     </label>
                     <div className="col-md-9">
                       <textarea name="description"
-                      value={this.state.description} onChange={this.handleChange} id="description" className="form-control" placeholder="Item description here" rows="5"></textarea>
+                      value={this.state.description} onChange={this.handleChange} onBlur={this.handleBlur} id="description" className="form-control" placeholder="Item description here" rows="5"></textarea>
                     </div>
                   </div>
 
