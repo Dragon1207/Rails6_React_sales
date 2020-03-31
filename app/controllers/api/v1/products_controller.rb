@@ -1,7 +1,7 @@
 class Api::V1::ProductsController < ApplicationController
-  before_action :require_signin, except: [:index, :show]
+  # before_action :require_signin, except: [:index, :show]
   before_action :find_product, only: [:show, :edit, :update, :destroy]
-  before_action :require_owner, only: [:edit, :update, :destroy]
+  # before_action :require_owner, only: [:edit, :update, :destroy]
 
   def index
     @products = Product.all
@@ -14,13 +14,11 @@ class Api::V1::ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    @product.user = current_user
-    if @product.save
-      flash[:notice] = 'Product has been created'
-      redirect_to root_path
-    else
-      flash.now[:alert] = 'There was an error, please try again'
-      render :new
+    @product.user_id = 1
+    # @product.user = current_user
+    unless @product.save
+      render json: @product.errors.full_messages, status: :unprocessable_entity
+
     end
   end
 

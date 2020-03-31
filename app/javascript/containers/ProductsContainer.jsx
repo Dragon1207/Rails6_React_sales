@@ -24,7 +24,17 @@ class ProductList extends React.Component {
       .catch(error => console.log(error.response.data))
   }
   handleProductSubmit = (data) => {
-    console.log('Submitted in Product List')
+    const newProduct = {
+      product: { ...data }
+    }
+    axios
+      .post('/api/v1/products.json', newProduct)
+      .then(response => {
+        // const newProducts = this.state.products.concat(response.data.product)
+        const newProducts = [ ...this.state.products, response.data.product ]
+        this.setState({ products: newProducts })
+      })
+      .catch(error => console.log(error))
   }
 
   render(){

@@ -19,7 +19,7 @@ class ProductDetail extends React.Component {
         this.setState({product: response.data.product})
         console.log(response.data.product)
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error.response))
   }
   render(){
     const { product } = this.state
