@@ -93,14 +93,16 @@ class NewProductForm extends Component {
                   <div className="form-group row">
                     <label htmlFor="price" className="col-md-3 col-form-label">Price</label>
                     <div className="col-md-9">
-                      <input type="text" name="price" value={this.state.price} onChange={this.handleChange} onBlur={this.handleBlur} id="price" className="form-control" placeholder="Item price" />
+                      <input type="text" name="price" value={this.state.price} onChange={this.handleChange} onBlur={this.handleBlur} id="price" className={inputClasses("price", this.state)} placeholder="Item price" />
+                      {this.state.errors.price ?           <div className='invalid-feedback'> {this.state.errors.price}</div> : null}
                     </div>
                   </div>
 
                   <div className="form-group row">
                     <label htmlFor="price" className="col-md-3 col-form-label">Quantity</label>
                     <div className="col-md-9">
-                      <input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} onBlur={this.handleBlur} id="quantity" className="form-control" placeholder="Item quantity" />
+                      <input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} onBlur={this.handleBlur} id="quantity" className={inputClasses("quantity", this.state)} placeholder="Item quantity" />
+                      {this.state.errors.quantity ?           <div className='invalid-feedback'> {this.state.errors.quantity}</div> : null}
                     </div>
                   </div>
 
@@ -110,7 +112,8 @@ class NewProductForm extends Component {
                     </label>
                     <div className="col-md-9">
                       <textarea name="description"
-                      value={this.state.description} onChange={this.handleChange} onBlur={this.handleBlur} id="description" className="form-control" placeholder="Item description here" rows="5"></textarea>
+                      value={this.state.description} onChange={this.handleChange} onBlur={this.handleBlur} id="description" className={inputClasses("description", this.state)} placeholder="Item description here" rows="5"></textarea>
+                      {this.state.errors.description ?           <div className='invalid-feedback'> {this.state.errors.description}</div> : null}
                     </div>
                   </div>
 
