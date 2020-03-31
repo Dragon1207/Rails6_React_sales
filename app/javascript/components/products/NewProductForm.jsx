@@ -32,8 +32,39 @@ class NewProductForm extends Component {
       quantity: ''
     })
   }
-  handleChange =(event) => {
-    this.setState({ [event.target.name]: event.target.value } )
+  handleChange = (event) => {
+    const { name, value } = event.target
+    this.setState({ [name]: value })
+    this.clearErrors(name, value)
+  }
+
+  clearErrors = (name, value) => {
+    let errors = { ...this.state.errors }
+
+    switch(name){
+      case 'name':
+        if(value.length > 0){
+          delete errors['name']
+        }
+        break
+      case 'description':
+        if(value.length > 0){
+          delete errors['description']
+        }
+        break
+      case 'price':
+        if(parseFloat(value) > 0.0 || value.match(/^\d{1,}(\.\d{0,2})?$/)){
+          delete errors['price']
+        }
+        break
+      case 'quantity':
+        if(parseInt(value, 10) > 0 || value.match(/^\d{1,}$/)){
+          delete errors['quantity']
+        }
+        break
+      default:
+    }
+    this.setState({ errors })
   }
   checkErrors = (state, fieldName) => {
     const error = {}
