@@ -16,6 +16,12 @@ class ProductList extends React.Component {
   componentDidMount = () => {
     this.loadProductsFromServer()
   }
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if(this.state.serverErrors.length !== nextState.serverErrors.length){
+      return true
+    }
+    return false
+  }
   loadProductsFromServer = () => {
     axios
       .get('/api/v1/products.json')
@@ -43,8 +49,14 @@ class ProductList extends React.Component {
          })
       })
       .catch(error => {
-        const msg = error.response.data
-        this.setState({ serverErrors: [...this.state.serverErrors, ...msg]})
+        const msgs = error.response.data
+        let currentErrors = [...this.state.serverErrors]
+        msgs.forEach((msg) => {
+          if(!currentErrors.includes(msg)) {
+            currentErrors = [...currentErrors, msg]
+          }
+        })
+        this.setState({ serverErrors: currentErrors})
       })
   }
   resetSaved = () => {
@@ -56,8 +68,11 @@ class ProductList extends React.Component {
 
   render(){
     const { products } = this.state
-    const productList = products.map(product => <Product key={product.id} product={product} />)
+    const productList = products.map(
+      product => <Product key={product.id} product={product} />
+    )
 
+    console.log(this.state)
 
     return (
       <React.Fragment>
