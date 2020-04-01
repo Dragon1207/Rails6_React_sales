@@ -8,7 +8,9 @@ import NewProductForm from '../components/products/NewProductForm'
 class ProductList extends React.Component {
 
     state = {
-      products: []
+      products: [],
+      serverErrors: [],
+      saved: false
     }
 
   componentDidMount = () => {
@@ -21,7 +23,9 @@ class ProductList extends React.Component {
         const { products } = response.data
         this.setState({ products })
       })
-      .catch(error => console.log(error.response.data))
+      .catch(error => {
+        console.log(error.response.data)
+      })
   }
   handleProductSubmit = (data) => {
     const newProduct = {
@@ -32,9 +36,22 @@ class ProductList extends React.Component {
       .then(response => {
         // const newProducts = this.state.products.concat(response.data.product)
         const newProducts = [ ...this.state.products, response.data.product ]
-        this.setState({ products: newProducts })
+        this.setState({
+          products: newProducts,
+          serverErrors: [],
+          saved: true
+         })
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        const msg = error.response.data
+        this.setState({ serverErrors: [...this.state.serverErrors, ...msg]})
+      })
+  }
+  resetSaved = () => {
+    this.setState({
+      saved: false,
+      serverErrors: []
+    })
   }
 
   render(){
@@ -45,7 +62,10 @@ class ProductList extends React.Component {
     return (
       <React.Fragment>
         <Jumbotron />
-        <NewProductForm onSubmit={this.handleProductSubmit} />
+        <NewProductForm onSubmit={this.handleProductSubmit}
+          serverErrors={this.state.serverErrors}
+          saved={this.state.saved}
+          onResetSaved={this.resetSaved} />
         <div className="container">
           <div className="row">
             <div className="col-md-12 mb-2">
