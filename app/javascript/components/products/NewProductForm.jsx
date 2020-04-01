@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { inputClasses } from '../../shared/helpers'
+import ErrorMessages from '../shared/ErrorMessages'
 
 class NewProductForm extends Component {
 
@@ -105,6 +106,8 @@ class NewProductForm extends Component {
     return (
       <div className="container mb-4">
         <div className="row">
+        {this.props.serverErrors.length > 0 && <ErrorMessages errors={this.props.serverErrors} />
+        }
           <div className="col-md-8 offset-md-2">
             <div className="card panel-div">
               <h1 className="text-center form-header-style pt-2 pb-3">
