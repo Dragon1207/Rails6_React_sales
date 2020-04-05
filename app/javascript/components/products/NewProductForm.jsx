@@ -29,17 +29,17 @@ class NewProductForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
 
-    const fieldNames = ['name', 'description', 'price', 'quantity']
+    const fieldNames = ["name", "description", "price", "quantity"]
     this.verifyAndSetFieldErrors(fieldNames)
 
-    if(Object.keys(this.state.erorrs).length === 0){
+    if(Object.keys(this.state.errors).length === 0){
       const { name, description, price, quantity } = this.state
 
-      const newProduct = { name, description, price, quantity
-      }
+      const newProduct = { name, description, price, quantity }
       this.props.onSubmit(newProduct)
-    }
   }
+
+}
 
   verifyAndSetFieldErrors = (fieldNames) => {
     let errors = {}

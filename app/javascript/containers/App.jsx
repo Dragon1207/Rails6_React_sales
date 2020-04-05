@@ -16,7 +16,8 @@ class App extends Component {
           <Switch>
             <Route exact path='/' component={ProductList}/>
             <Route path='/products/:id' component={ProductDetail} />
-            // <Route path='/newProduct' component={NewProductForm} />
+
+            <Route path='/newProduct' component={NewProductForm} />
 
             <Route render={() => (
               <div className="container">

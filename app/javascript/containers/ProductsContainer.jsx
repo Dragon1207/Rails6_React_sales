@@ -10,7 +10,8 @@ class ProductList extends React.Component {
     state = {
       products: [],
       serverErrors: [],
-      saved: false
+      saved: false,
+      isFormVisible: false
     }
 
   componentDidMount = () => {
@@ -27,7 +28,7 @@ class ProductList extends React.Component {
       .get('/api/v1/products.json')
       .then(response => {
         const { products } = response.data
-        this.setState({ products })
+        this.setState({ products: products })
       })
       .catch(error => {
         console.log(error.response.data)
@@ -59,6 +60,12 @@ class ProductList extends React.Component {
         this.setState({ serverErrors: currentErrors})
       })
   }
+
+  handleButtonClick = () => {
+    this.setState({
+      isFormVisible: !this.state.isFormVisible
+    })
+  }
   resetSaved = () => {
     this.setState({
       saved: false,
@@ -68,19 +75,28 @@ class ProductList extends React.Component {
 
   render(){
     const { products } = this.state
-    const productList = products.map(
-      product => <Product key={product.id} product={product} />
-    )
+    // const products = this.state.products
+
+    const productList = products.map(product => (<Product key={product.id} product={product} /> ))
 
     console.log(this.state)
 
     return (
       <React.Fragment>
         <Jumbotron />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 mb-2">
+              <button onClick={this.handleButtonClick} className="btn btn-outline-purple btn-sm">+ New Product</button>
+            </div>
+          </div>
+        </div>
+        {this.state.isFormVisible &&
         <NewProductForm onSubmit={this.handleProductSubmit}
           serverErrors={this.state.serverErrors}
           saved={this.state.saved}
           onResetSaved={this.resetSaved} />
+        }
         <div className="container">
           <div className="row">
             <div className="col-md-12 mb-2">
