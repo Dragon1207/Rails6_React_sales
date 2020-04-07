@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 
 import { inputClasses } from '../../shared/helpers'
 import ErrorMessages from '../shared/ErrorMessages'
+import Input from '../shared/Input'
+import TextArea from '../shared/TextArea'
+import Button from '../shared/Button'
 
 class NewProductForm extends Component {
 
@@ -137,53 +140,68 @@ class NewProductForm extends Component {
 
               <div className="form-body-style px-5 pt-4">
                 <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                  <div className="form-group row">
-                    <label htmlFor="name" className="col-md-3 col-form-label">Name</label>
-                    <div className="col-md-9">
-                      <input type="text" name="name" value={this.state.name} onChange={this.handleChange} onBlur={this.handleBlur} id="name" className={inputClasses("name", this.state)} placeholder="Item name" autoFocus={true} />
-                      {this.state.errors.name ?           <div className='invalid-feedback'> {this.state.errors.name}</div> : null}
-                    </div>
-                  </div>
+                  <Input
+                  title="Name"
+                  type="text"
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}
+                  placeholder="Item name"
+                  autoFocus={true}
+                  state={this.state}
+                  />
 
-                  <div className="form-group row">
-                    <label htmlFor="price" className="col-md-3 col-form-label">Price</label>
-                    <div className="col-md-9">
-                      <input type="text" name="price" value={this.state.price} onChange={this.handleChange} onBlur={this.handleBlur} id="price" className={inputClasses("price", this.state)} placeholder="Item price" />
-                      {this.state.errors.price ?           <div className='invalid-feedback'> {this.state.errors.price}</div> : null}
-                    </div>
-                  </div>
+                  <Input
+                  title="Price"
+                  type="text"
+                  name="price"
+                  value={this.state.price}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}
+                  placeholder="Item price"
+                  autoFocus={false}
+                  state={this.state}
+                  />
 
-                  <div className="form-group row">
-                    <label htmlFor="price" className="col-md-3 col-form-label">Quantity</label>
-                    <div className="col-md-9">
-                      <input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange} onBlur={this.handleBlur} id="quantity" className={inputClasses("quantity", this.state)} placeholder="Item quantity" />
-                      {this.state.errors.quantity ?           <div className='invalid-feedback'> {this.state.errors.quantity}</div> : null}
-                    </div>
-                  </div>
+                  <Input
+                  title="Quantity"
+                  type="number"
+                  name="quantity"
+                  value={this.state.quantity}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}
+                  placeholder="Item quantity"
+                  autoFocus={false}
+                  state={this.state}
+                  />
 
-                  <div className="form-group row">
-                    <label htmlFor="description" className="col-md-3 col-form-label">
-                      Description
-                    </label>
-                    <div className="col-md-9">
-                      <textarea name="description"
-                      value={this.state.description} onChange={this.handleChange} onBlur={this.handleBlur} id="description" className={inputClasses("description", this.state)} placeholder="Item description here" rows="5"></textarea>
-                      {this.state.errors.description ?           <div className='invalid-feedback'> {this.state.errors.description}</div> : null}
-                    </div>
-                  </div>
+                  <TextArea
+                  title="Description"
+                  name="description"
+                  value={this.state.description}
+                  rows="5"
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}
+                  placeholder="Item description"
+                  autoFocus={false}
+                  state={this.state}
+                  />
 
-                  <div className="form-group row">
-                    <label htmlFor="image" className="col-md-3 col-form-label">Image</label>
-                    <div className="col-md-9">
-                      <input type="file" name="image" id="image" className="form-control"  />
-                    </div>
-                  </div>
+                  <Input
+                  title="Image"
+                  type="file"
+                  name="image"
+                  value={this.state.image}
+                  onChange={this.handleChange}
+                  onBlur={this.handleBlur}
+                  placeholder="Item image"
+                  autoFocus={false}
+                  state={this.state}
+                  />
 
-                  <div className="form-group row">
-                    <div className="col-md-9 offset-md-3">
-                      <input type="submit" className="btn btn-outline-purple" value={buttonText} />
-                    </div>
-                  </div>
+                  <Button buttonText={buttonText} />             
+
                 </form>
               </div>
             </div>

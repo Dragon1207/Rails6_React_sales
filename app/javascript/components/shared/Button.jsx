@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes form 'prop-types'
+import PropTypes from 'prop-types'
 
 const Button = (props) => (
   <div className="form-group row">
