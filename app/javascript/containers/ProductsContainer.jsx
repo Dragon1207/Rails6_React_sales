@@ -18,10 +18,10 @@ class ProductList extends React.Component {
     this.loadProductsFromServer()
   }
   shouldComponentUpdate = (nextProps, nextState) => {
-    if(this.state.serverErrors.length !== nextState.serverErrors.length){
-      return true
+    if(this.state.serverErrors.length > 0 && this.state.serverErrors.length !== nextState.serverErrors.length){
+      return false
     }
-    return false
+    return true
   }
   loadProductsFromServer = () => {
     axios
@@ -76,7 +76,6 @@ class ProductList extends React.Component {
   render(){
     const { products } = this.state
     // const products = this.state.products
-
     const productList = products.map(product => (<Product key={product.id} product={product} /> ))
 
     console.log(this.state)
