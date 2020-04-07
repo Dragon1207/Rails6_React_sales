@@ -200,7 +200,10 @@ class NewProductForm extends Component {
                   state={this.state}
                   />
 
-                  <Button buttonText={buttonText} />             
+                  // <Button buttonText={buttonText} />
+                  <Button>
+                    {this.props.buttonText}
+                  </Button>
 
                 </form>
               </div>
