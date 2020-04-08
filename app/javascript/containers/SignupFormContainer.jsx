@@ -1,9 +1,48 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import Input from '../components/shared/Input'
 import Button from '../components/shared/Button'
 import SignupForm from '../components/shared/Form'
 
 class Signup extends Component {
+  state = {
+    firstname:  '',
+    lastname:   '',
+    email:      '',
+    password:   '',
+    errors:     {}
+  }
+
+  handleChange = (event) => {
+    const { name, value} = event.target
+    this.setState({ [name]: value })
+  }
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const { firstname, lastname, email, password } = this.state
+
+    const newUser = {
+      user: {
+        first_name: firstname,
+        last_name: lastname,
+        email,
+        password
+      }
+    }
+    this.handleSignup(newUser)
+  }
+
+  handleSignup = (user) => {
+    axios
+      .post('/api/v1/users.json', user)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => console.log(error))
+  }
+  handleBlur = (event) => {
+    
+  }
   render(){
     return(
       <div className="container mt-4">

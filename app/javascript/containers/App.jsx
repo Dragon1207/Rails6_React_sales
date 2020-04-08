@@ -8,6 +8,9 @@ import ProductDetail from './ProductDetailContainer'
 import Signup from './SignupFormContainer'
 
 class App extends Component {
+  state = {
+    currentUser: null
+  }
   render(){
     return(
       <BrowserRouter>
@@ -18,7 +21,7 @@ class App extends Component {
             <Route path='/products/:id' component={ProductDetail} />
             <Route path='/register' component={Signup} />
 
-            
+
 
             <Route render={() => (
               <div className="container">
