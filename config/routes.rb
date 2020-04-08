@@ -6,7 +6,11 @@ Rails.application.routes.draw do
         resources :comments, only: [:create]
       end
 
-      resources :users, only: [:create]
+      resources :users, only: [:create] do
+        collection do
+          get: :get_current_user
+        end
+      end
       post '/signin',     to: 'sessions#create'
       delete '/signout',  to: 'sessions#destroy', as: 'session'
     end
