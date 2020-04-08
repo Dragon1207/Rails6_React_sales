@@ -36,12 +36,12 @@ class Signup extends Component {
     axios
       .post('/api/v1/users.json', user)
       .then(response => {
-        console.log(response.data)
+        this.props.onFetchCurrentUser()
       })
       .catch(error => console.log(error))
   }
   handleBlur = (event) => {
-    
+
   }
   render(){
     return(
