@@ -138,8 +138,8 @@ class NewProductForm extends Component {
               <ProductForm onSubmit={this.handleSubmit}
               onChange={this.handleChange}
               onBlur={this.handleBlur}
-              state={this.sate}
-              buttonText={this.buttonText}
+              state={this.state}
+              buttonText={buttonText}
               />
 
 

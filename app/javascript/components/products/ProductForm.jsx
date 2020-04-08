@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTpyes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import Input from '../shared/Input'
 import Button from '../shared/Button'
@@ -13,8 +13,8 @@ const ProductForm = (props) => (
   type="text"
   name="name"
   value={props.state.name}
-  onChange={props.handleChange}
-  onBlur={props.handleBlur}
+  onChange={props.onChange}
+  onBlur={props.onBlur}
   placeholder="Item name"
   autoFocus={true}
   state={props.state}
@@ -25,8 +25,8 @@ const ProductForm = (props) => (
   type="text"
   name="price"
   value={props.state.price}
-  onChange={props.handleChange}
-  onBlur={props.handleBlur}
+  onChange={props.onChange}
+  onBlur={props.onBlur}
   placeholder="Item price"
   autoFocus={false}
   state={props.state}
@@ -37,8 +37,8 @@ const ProductForm = (props) => (
   type="number"
   name="quantity"
   value={props.state.quantity}
-  onChange={props.handleChange}
-  onBlur={props.handleBlur}
+  onChange={props.onChange}
+  onBlur={props.onBlur}
   placeholder="Item quantity"
   autoFocus={false}
   state={props.state}
@@ -49,8 +49,8 @@ const ProductForm = (props) => (
   name="description"
   value={props.state.description}
   rows="5"
-  onChange={props.handleChange}
-  onBlur={props.handleBlur}
+  onChange={props.onChange}
+  onBlur={props.onBlur}
   placeholder="Item description"
   autoFocus={false}
   state={props.state}
@@ -61,8 +61,8 @@ const ProductForm = (props) => (
   type="file"
   name="image"
   value={props.state.image}
-  onChange={props.handleChange}
-  onBlur={props.handleBlur}
+  onChange={props.onChange}
+  onBlur={props.onBlur}
   placeholder="Item image"
   autoFocus={false}
   state={props.state}
