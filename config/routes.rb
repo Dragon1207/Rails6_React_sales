@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
       resources :users, only: [:create] do
         collection do
-          get: :get_current_user
+          get :get_current_user
         end
       end
       post '/signin',     to: 'sessions#create'

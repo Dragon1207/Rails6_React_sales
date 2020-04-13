@@ -11,7 +11,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def get_current_user
-    get_current_user
+    current_user
   end
 
 

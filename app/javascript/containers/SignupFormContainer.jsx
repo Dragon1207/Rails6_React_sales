@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+
 import Input from '../components/shared/Input'
 import Button from '../components/shared/Button'
 import SignupForm from '../components/shared/Form'
+import Axios from 'axios';
 
 class Signup extends Component {
   state = {
@@ -10,7 +13,8 @@ class Signup extends Component {
     lastname:   '',
     email:      '',
     password:   '',
-    errors:     {}
+    errors:     {},
+    toHomePage: false
   }
 
   handleChange = (event) => {
@@ -30,6 +34,13 @@ class Signup extends Component {
       }
     }
     this.handleSignup(newUser)
+    this.setState({
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      toHomePage: true
+    })
   }
 
   handleSignup = (user) => {
@@ -44,6 +55,9 @@ class Signup extends Component {
 
   }
   render(){
+    if(this.state.toHomePage){
+      return <Redirect to="/" />
+    }
     return(
       <div className="container mt-4">
         <div className="row">
@@ -59,7 +73,7 @@ class Signup extends Component {
                 onBlur={this.handleBlur}
                 placeholder="Your first name"
                 autoFocus={true}
-                state="this.state"
+                state={this.state}
                />
 
                <Input
@@ -71,19 +85,19 @@ class Signup extends Component {
                  onBlur={this.handleBlur}
                  placeholder="Your last name"
                  autoFocus={false}
-                 state="this.state"
+                 state={this.state}
                 />
 
                 <Input
                   title="Email"
-                  type="email"
+                  type="text"
                   name="email"
                   value={this.state.email}
                   onChange={this.handleChange}
                   onBlur={this.handleBlur}
                   placeholder="Your email address"
                   autoFocus={false}
-                  state="this.state"
+                  state={this.state}
                  />
 
                  <Input
@@ -95,7 +109,7 @@ class Signup extends Component {
                    onBlur={this.handleBlur}
                    placeholder="Your password"
                    autoFocus={false}
-                   state="this.state"
+                   state={this.state}
                   />
 
                   <Button>Sign Up</Button>
