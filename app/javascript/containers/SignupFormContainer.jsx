@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
 
@@ -6,6 +7,8 @@ import Input from '../components/shared/Input'
 import Button from '../components/shared/Button'
 import SignupForm from '../components/shared/Form'
 import { EMAIL_REGEX } from '../shared/helpers'
+import ErrorMessages from '../components/shared/ErrorMessages'
+import {verifyAndSetFieldErrors} from '../shared/helpers'
 
 class Signup extends Component {
   state = {
@@ -14,7 +17,28 @@ class Signup extends Component {
     email:      '',
     password:   '',
     errors:     {},
-    toHomePage: false
+    toHomePage: false,
+    serverErrors: [],
+    saved: false
+  }
+
+  componentDidUpdate = () => {
+    if(this.state.saved){
+      this.setState({
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        toHomePage: true
+      })
+      this.resetSaved()
+    }
+  }
+
+  componentWillUnmount = () => {
+    if(this.state.serverErrors.length > 0){
+      this.resetSaved()
+    }
   }
 
   handleChange = (event) => {
@@ -24,37 +48,44 @@ class Signup extends Component {
   }
   handleSubmit = (event) => {
     event.preventDefault()
-    const { firstname, lastname, email, password } = this.state
+    const fieldNames = ['firstname', 'lastname', 'email', 'password']
+    verifyAndSetFieldErrors(this, fieldNames)
 
-    const newUser = {
-      user: {
-        first_name: firstname,
-        last_name: lastname,
-        email,
-        password
+    if(Object.keys(this.state.errors).length === 0){
+      const {firstname, lastname, email, password} = this.state
+      const newUser = {
+        user: {
+          first_name: firstname,
+          last_name: lastname,
+          email,
+          password
+        }
       }
+      this.handleSignup(newUser)
     }
-    this.handleSignup(newUser)
-    this.setState({
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      toHomePage: true
-    })
   }
+
 
   handleSignup = (user) => {
     axios
       .post('/api/v1/users.json', user)
       .then(response => {
-        this.props.onFetchCurrentUser()
+        this.setState({
+          serverErrors: [],
+          saved: true
+        }, () => {
+          this.props.onFetchCurrentUser()
+        })
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        this.setState({
+          serverErrors: [...error.response.data]
+        })
+      })
   }
   handleBlur = (event) => {
     const { name } = event.target
-    const fieldError = this.checkErrors(this.state.name)
+    const fieldError = this.checkErrors(this.state, name)
     const errors = Object.assign({}, this.state.errors, fieldError)
     this.setState({ errors })
   }
@@ -114,13 +145,22 @@ class Signup extends Component {
     this.setState({ errors })
   }
 
+  resetSaved = () => {
+    this.setState({
+      saved: false,
+      serverErrors: []
+    })
+  }
+
   render(){
     if(this.state.toHomePage || this.props.currentUser){
       return <Redirect to="/" />
     }
-    return(
+
+    return (
       <div className="container mt-4">
         <div className="row">
+        {this.state.serverErrors.length > 0 && <ErrorMessages errors={this.state.serverErrors} /> }
           <div className="col-md-8 offset-md-2">
             <h1 className="text-center form-header-style mt-5 pt-2 pb-3">Sign Up</h1>
             <SignupForm onSubmit={this.handleSubmit}>
@@ -181,6 +221,11 @@ class Signup extends Component {
       </div>
     )
   }
+}
+
+Signup.propTypes = {
+  currentUser: PropTypes.object,
+  onFetchCurrentUser: PropTypes.func.isRequired
 }
 
 export default Signup
