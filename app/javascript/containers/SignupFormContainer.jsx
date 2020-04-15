@@ -5,7 +5,7 @@ import axios from 'axios'
 import Input from '../components/shared/Input'
 import Button from '../components/shared/Button'
 import SignupForm from '../components/shared/Form'
-import Axios from 'axios';
+import { EMAIL_REGEX } from '../shared/helpers'
 
 class Signup extends Component {
   state = {
@@ -20,6 +20,7 @@ class Signup extends Component {
   handleChange = (event) => {
     const { name, value} = event.target
     this.setState({ [name]: value })
+    this.clearErrors(name, value)
   }
   handleSubmit = (event) => {
     event.preventDefault()
@@ -52,10 +53,69 @@ class Signup extends Component {
       .catch(error => console.log(error))
   }
   handleBlur = (event) => {
-
+    const { name } = event.target
+    const fieldError = this.checkErrors(this.state.name)
+    const errors = Object.assign({}, this.state.errors, fieldError)
+    this.setState({ errors })
   }
+  checkErrors = (state, fieldName) => {
+    const error = {}
+    switch(fieldName) {
+      case 'firstname':
+        if(!state.firstname){
+          error.firstname = 'Please provide a first name'
+        }
+        break
+      case 'lastname':
+        if(!state.lastname){
+          error.lastname = 'Please provide a last name'
+        }
+        break
+      case 'password':
+        if(!state.password){
+          error.password = 'Please provide a password'
+        }
+        break
+      case 'email':
+       if(!state.email || !EMAIL_REGEX.test(state.email)){
+          error.email = 'Please provide a valid email address'
+          }
+        break
+      default:
+    }
+    return error
+  }
+
+  clearErrors = (name, value) => {
+    let errors = { ...this.state.errors }
+    switch (name) {
+      case 'firstname':
+        if (value.length > 0) {
+          delete errors['firstname']
+        }
+        break
+      case 'lastname':
+        if (value.length > 0) {
+          delete errors['lastname']
+        }
+        break
+      case 'email':
+        if (value.length > 0 && EMAIL_REGEX.test(this.state.          email)) {
+          delete errors['email']
+        }
+        break
+      case 'password':
+        if (value.length > 0) {
+          delete errors['password']
+        }
+        break
+      default:
+    }
+    this.setState({ errors })
+  }
+
   render(){
-    if(this.state.toHomePage){
+    if(this.state.toHomePage || this.props.currentUser){
       return <Redirect to="/" />
     }
     return(
