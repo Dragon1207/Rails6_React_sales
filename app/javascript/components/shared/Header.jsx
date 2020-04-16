@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, onSignout }) => (
   <nav className="navbar navbar-expand-lg navbar-light">
     <Link to='/' className="navbar-brand goog"> O-Sale </Link>
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,9 @@ const Header = ({ currentUser }) => (
         <li className="nav-item">
         <Link to='/register' className="nav-link">Sign Up</Link>
         </li>
+        <li className="nav-item">
+        <a href="#" onClick={onSignout} className="nav-link">Sign Out</a>
+        </li>
         {currentUser ?
         <li className="nav-item mt-1">
         <p className="navbar-text">Sign in as {currentUser.email}</p>
@@ -35,7 +38,8 @@ const Header = ({ currentUser }) => (
 )
 
 Header.propTypes = {
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  onSignout: PropTypes.func.isRequired
 }
 
 export default Header

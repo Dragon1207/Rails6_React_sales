@@ -29,11 +29,25 @@ class App extends Component {
   setCurrentUser = (currentUser) => {
     this.setState({ currentUser })
   }
+
+  handleSignout = (event) => {
+    event.preventDefault()
+    axios
+      .delete('/api/v1/signout.json')
+      .then(response => {
+        this.setState({ currentUser: null})
+      })
+      .cath(error => console.log(error.response))
+  }
+
   render(){
     return(
       <BrowserRouter>
         <React.Fragment>
-          <Header currentUser={this.state.currentUser} />
+          <Header
+            currentUser={this.state.currentUser}
+            onSignout={this.handleSignout}
+          />
           <Switch>
             <Route exact path='/' component={ProductList}/>
             <Route path='/products/:id' component={ProductDetail} />
