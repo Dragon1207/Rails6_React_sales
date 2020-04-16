@@ -7,8 +7,67 @@ import Input from '../components/shared/Input'
 import Button from '../components/shared/Button'
 import SigninForm from '../components/shared/Form'
 
+import { EMAIL_REGEX } from '../shared/helpers'
+
 
 class Signin extends Component {
+  state = {
+    email: '',
+    password: '',
+    errors: {},
+    toHomePage: false
+  }
+  handleChange = (event) => {
+    const { name, value } = event.target
+    this.setState({ [name]: value })
+    this.clearErrors(name, value)
+  }
+
+  checkErrors = (state, fieldName) => {
+    const error = {}
+
+    switch (fieldName){
+      case 'email':
+        if(!state.email || !EMAIL_REGEX.test(state.email)){
+          error.email = 'Please provide valid email address'
+        }
+        break
+      case 'password':
+        if(!state.password){
+          error.password = 'Please provide valid password'
+        }
+        break
+      default:
+    }
+    return error
+  }
+
+  clearErrors = (name, value) => {
+    let errors = { ...this.state.errors }
+
+    switch (name){
+      case 'email':
+        if(value.length > 0 && EMAIL_REGEX.test(value)){
+          delete errors['email']
+        }
+        break
+      case 'password':
+        if(value.length > 0){
+          delete errors['password']
+        }
+        break
+      default:
+    }
+    this.setState({ errors })
+  }
+
+  handleBlur = (event) => {
+    const { name } = event.target
+    const fieldError = this.checkErrors(this.state, name)
+    const errors = Object.assign({}, this.state.errors, fieldError)
+    this.setState({ errors })
+  }
+
   render(){
     return(
       <div className="container mt-4">
