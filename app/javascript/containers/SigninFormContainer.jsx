@@ -8,6 +8,7 @@ import Button from '../components/shared/Button'
 import SigninForm from '../components/shared/Form'
 
 import { EMAIL_REGEX } from '../shared/helpers'
+import { verifyAndSetFieldErrors } from '../shared/helpers'
 
 
 class Signin extends Component {
@@ -66,6 +67,20 @@ class Signin extends Component {
     const fieldError = this.checkErrors(this.state, name)
     const errors = Object.assign({}, this.state.errors, fieldError)
     this.setState({ errors })
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const fieldNames = ['email', 'password']
+    verifyAndSetFieldErrors(this, fieldNames)
+
+    if(Object.keys(this.state.errors).length === 0){
+      const user = {
+        email: this.state.email,
+        password: this.state.password
+      }
+      this.handleSignin(user)
+    }    
   }
 
   render(){
