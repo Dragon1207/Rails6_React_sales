@@ -80,10 +80,24 @@ class Signin extends Component {
         password: this.state.password
       }
       this.handleSignin(user)
-    }    
+    }
+  }
+
+  handleSignin = (user) => {
+    axios
+      .post('/api/v1/signin.json', user)
+      .then(response =>{
+        this.setState({ toHomePage: true })
+      })
+      .catch(error => {
+        console.log(errors.response)
+      })
   }
 
   render(){
+    if(this.state.toHomePage){
+      return <Redirect to='/' />
+    }
     return(
       <div className="container mt-4">
         <div className="row">
