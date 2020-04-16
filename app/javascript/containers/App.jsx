@@ -7,6 +7,7 @@ import Footer from '../components/shared/Footer'
 import ProductList from './ProductsContainer'
 import ProductDetail from './ProductDetailContainer'
 import Signup from './SignupFormContainer'
+import Signin from './SigninFormContainer'
 
 class App extends Component {
   state = {
@@ -58,6 +59,7 @@ class App extends Component {
               <Signup onFetchCurrentUser={this.fetchCurrentUser}
               currentUser={this.state.currentUser} />
             )} />
+            <Route path="/login" component={Signin} />
 
             <Route render={() => (
               <div className="container">
