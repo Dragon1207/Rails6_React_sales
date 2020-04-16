@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-const Header = ({ currentUser, onSignout }) => (
+const Header = ({ currentUser, onSignout, location, history }) => (
   <nav className="navbar navbar-expand-lg navbar-light">
     <Link to='/' className="navbar-brand goog"> O-Sale </Link>
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,8 @@ const Header = ({ currentUser, onSignout }) => (
         <Link to='/register' className="nav-link">Sign Up</Link>
         </li>
         <li className="nav-item">
-        <a href="#" onClick={onSignout} className="nav-link">Sign Out</a>
+        <a href="#" onClick={(event) => onSignout(event, location, history)} className="nav-link">Sign Out</a>
+      
         </li>
         {currentUser ?
         <li className="nav-item mt-1">
@@ -42,4 +43,4 @@ Header.propTypes = {
   onSignout: PropTypes.func.isRequired
 }
 
-export default Header
+export default withRouter(Header)

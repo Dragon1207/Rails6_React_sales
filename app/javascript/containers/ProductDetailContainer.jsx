@@ -10,7 +10,7 @@ class ProductDetail extends React.Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount(){    
     const id = this.props.match.params.id
 
     axios
