@@ -19,14 +19,14 @@ const Header = ({ currentUser, onSignout, location, history }) => (
         <Link to='/' className="nav-link">New Product</Link>
         </li>
         <li className="nav-item">
-        <Link to='/' className="nav-link">Sign In</Link>
+        <Link to='/login' className="nav-link">Sign In</Link>
         </li>
         <li className="nav-item">
         <Link to='/register' className="nav-link">Sign Up</Link>
         </li>
         <li className="nav-item">
         <a href="#" onClick={(event) => onSignout(event, location, history)} className="nav-link">Sign Out</a>
-      
+
         </li>
         {currentUser ?
         <li className="nav-item mt-1">

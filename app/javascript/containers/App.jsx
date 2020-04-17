@@ -59,7 +59,12 @@ class App extends Component {
               <Signup onFetchCurrentUser={this.fetchCurrentUser}
               currentUser={this.state.currentUser} />
             )} />
-            <Route path="/login" component={Signin} />
+            <Route path="/login" render={() => (
+              <Signin
+                onFetchCurrentUser={this.fetchCurrentUser}
+                currentUser={this.state.currentUser}
+              />
+            )} />
 
             <Route render={() => (
               <div className="container">

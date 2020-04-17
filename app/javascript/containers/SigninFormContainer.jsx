@@ -9,6 +9,7 @@ import SigninForm from '../components/shared/Form'
 
 import { EMAIL_REGEX } from '../shared/helpers'
 import { verifyAndSetFieldErrors } from '../shared/helpers'
+import ErrorMessages from '../components/shared/ErrorMessages'
 
 
 class Signin extends Component {
@@ -16,8 +17,28 @@ class Signin extends Component {
     email: '',
     password: '',
     errors: {},
-    toHomePage: false
+    toHomePage: false,
+    serverErrors: [],
+    saved: false
   }
+
+  componentDidUpdate = () => {
+    if(this.state.saved){
+      this.setState({
+        email: '',
+        password: '',
+        toHomePage: true
+      })
+      this.resetSaved()
+    }
+  }
+
+  componentWillUnmount = () => {
+      if(this.state.serverErrors.length > 0){
+        this.resetSaved()
+      }
+  }
+
   handleChange = (event) => {
     const { name, value } = event.target
     this.setState({ [name]: value })
@@ -86,21 +107,43 @@ class Signin extends Component {
   handleSignin = (user) => {
     axios
       .post('/api/v1/signin.json', user)
-      .then(response =>{
-        this.setState({ toHomePage: true })
+      .then(response => {
+        this.setState({
+          toHomePage: true,
+          serverErrors: [],
+          saved: true
+        }, () => {
+          this.props.onFetchCurrentUser()
+        })
       })
       .catch(error => {
-        console.log(errors.response)
+        const msg = error.response.data.error
+        const idx = this.state.serverErrors.indexOf(msg)
+
+        if(idx == -1){
+          this.setState({
+            serverErrors: [...this.state.serverErrors, msg]
+          })
+        }
       })
   }
 
+  resetSaved = () => {
+    this.setState({
+      saved: falase,
+      serverErrors: []
+    })
+  }
+
   render(){
-    if(this.state.toHomePage){
+    if(this.state.toHomePage || this.props.currentUser){
       return <Redirect to='/' />
     }
     return(
       <div className="container mt-4">
         <div className="row">
+        {this.state.serverErrors.length > 0 &&
+        <ErrorMessages errors={this.state.serverErrors} />}
           <div className="col-md-8 offset-md-2">
           <h1 className="text-center form-header-style mt-5 pt-2 pb-3">Sign In</h1>
           <SigninForm onSubmit={this.handleSubmit}>
@@ -133,6 +176,11 @@ class Signin extends Component {
       </div>
     )
   }
+}
+
+Signin.propTypes = {
+  onFetchCurrentUser: PropTypes.func.isRequired,
+  currentUser: PropTypes.object
 }
 
 export default Signin
