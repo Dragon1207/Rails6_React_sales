@@ -10,8 +10,7 @@ class ApplicationController < ActionController::Base
 
   def require_signin
     unless current_user
-      flash[:alert] = 'Please sign in first'
-      redirect_to signin_path
+      render json: { error: 'Please sign in first' }, status: 401
     end
   end
 
