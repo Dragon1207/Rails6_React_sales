@@ -50,7 +50,9 @@ class Api::V1::ProductsController < ApplicationController
     begin
       @product = Product.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to root_path
+      render json: {
+        error: 'Could not find product'
+      }, status: 404
     end
   end
 

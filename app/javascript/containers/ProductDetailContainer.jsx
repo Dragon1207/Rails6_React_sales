@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 class ProductDetail extends React.Component {
   constructor(props){
@@ -10,8 +12,8 @@ class ProductDetail extends React.Component {
     }
   }
 
-  componentDidMount(){    
-    const id = this.props.match.params.id
+  componentDidMount(){
+    const id = this.props.match && this.props.match.params.id
 
     axios
       .get(`/api/v1/products/${id}.json`)
@@ -21,8 +23,20 @@ class ProductDetail extends React.Component {
       })
       .catch(error => console.log(error.response))
   }
+
+  isOwner = (user, product) => {
+    if(Object.keys(product).length > 0){
+      return user && user.id === product.user_id
+    }
+    return false
+  }
+
   render(){
+    const id = this.props.match && this.props.match.params.id
     const { product } = this.state
+    const { currentUser } = this.props
+
+    console.log(this.props)
     return (
       <div className="container">
         <div className="row">
@@ -42,18 +56,27 @@ class ProductDetail extends React.Component {
               {product.description}
             </div>
 
+          {this.isOwner(currentUser, product) ?
+
+          <React.Fragment>
             <div className="float-right btn-edit-del">
               <a href="#" className="btn btn-outline-danger btn-lg">Delete</a>
             </div>
 
             <div className="btn-edit-del">
-              <a href="#" className="btn btn-outline-purple btn-lg">Edit</a>
+              <Link to={`/product/${id}/edit`} className="btn btn-outline-purple btn-lg">Edit</Link>
             </div>
+          </React.Fragment> : null
+        }
           </div>
         </div>
       </div>
     )
   }
+}
+
+ProductDetail.propTypes = {
+  currentUser: PropTypes.object
 }
 
 export default ProductDetail
