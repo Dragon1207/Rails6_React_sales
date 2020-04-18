@@ -36,7 +36,7 @@ class ProductDetail extends React.Component {
     const { product } = this.state
     const { currentUser } = this.props
 
-    console.log(this.props)
+    
     return (
       <div className="container">
         <div className="row">
