@@ -1,14 +1,16 @@
 import React from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
+import EditProductForm from './EditProductFormContainer'
 
 class ProductDetail extends React.Component {
   constructor(props){
     super(props)
 
     this.state = {
-      product: {}
+      product: {},
+      editing: false
     }
   }
 
@@ -24,6 +26,14 @@ class ProductDetail extends React.Component {
       .catch(error => console.log(error.response))
   }
 
+  editingProduct = (value) => {
+    if(value == undefined){
+      this.setState({ editing: true })
+    } else if(value === "edited"){
+      this.setState({ eidting: false })
+    }
+  }
+
   isOwner = (user, product) => {
     if(Object.keys(product).length > 0){
       return user && user.id === product.user_id
@@ -36,7 +46,7 @@ class ProductDetail extends React.Component {
     const { product } = this.state
     const { currentUser } = this.props
 
-    
+
     return (
       <div className="container">
         <div className="row">
@@ -64,11 +74,14 @@ class ProductDetail extends React.Component {
             </div>
 
             <div className="btn-edit-del">
-              <Link to={`/product/${id}/edit`} className="btn btn-outline-purple btn-lg">Edit</Link>
+              <Link to={`/products/${id}/edit`} className="btn btn-outline-purple btn-lg">Edit</Link>
             </div>
           </React.Fragment> : null
         }
           </div>
+          <Route path="/products/:id/edit" render={(props) => (
+            <EditProductForm {...props} onEdit={this.editingProduct} />
+          )} />
         </div>
       </div>
     )
