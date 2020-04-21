@@ -78,8 +78,32 @@ class EditProductForm extends Component {
 
   }
 
-  handleProductUpdate = () => {
+  handleProductUpdate = (data) => {
+    const updatedProduct = {
+      product: { ...data }
+    }
+    axios
+      .put(`/api/v1/products/${data/id}.json`, updatedProduct)
+      .then(response => {
+        const { product } = response.data
+        this.setState({
+          ...product,
+          serverErrors: [],
+          saved: true
+        }, () => {
+          this.props.onUpdate(true)
+          this.props.history.push(`/products/${data.id}`)
+        })
+      })
+      .catch(error => {
+        const updatedErrors = [
+          ...this.state.serverErrors,
+          ...error.response.data
+        ]
 
+        const errorsSet = new Set(updatedErrors)
+        this.setState({ serverErrors: [...errorsSet] })
+      })
   }
 
   checkErrors = (state, fieldName) => {
