@@ -63,25 +63,88 @@ class EditProductForm extends Component {
 
     const fieldNames = ['name', 'description', 'price', 'quantity']
     verifyAndSetFieldErrors(this, fieldNames)
-    const editedProduct = {
-      id: this.state.id,
-      name: this.state.name,
-      description: this.state.description,
-      price: parseFloat(this.state.price),
-      quantity: parseInt(this.state.quantity, 10)
+
+    if(Object.keys(this.state.errors).length === 0){
+      const { id, name, description, price, quantity } = this.state
+      const editedProduct = {
+        id,
+        name,
+        description,
+        price: parseFloat(price),
+        quantity: parseInt(quantity, 10)
+      }
+      this.handleProductUpdate(editedProduct)
     }
-    this.handleProductUpdate(editedProduct)
+
   }
 
   handleProductUpdate = () => {
 
   }
 
-  checkErrors = (state, fieldName) => {}
+  checkErrors = (state, fieldName) => {
+    const error = {}
 
-  clearErrors = (name, value) => {}
+    switch (fieldName){
+      case 'name':
+        if(!state.name){
+          error.name = 'Please provide a name'
+        }
+        break
+      case 'description':
+        if(!state.description){
+          error.description = 'Please provide a description'
+        }
+        break
+      case 'price':
+        if(parseFloat(state.price) <= 0.0 || !state.price.toString().match(/^\d{1,}(\.\d{0,2})?$/)){
+          error.price = 'Price must be a positive number'
+        }
+        break
+      case 'quantity':
+        if(parseInt(state.quantity, 10) <= 0 || !state.quantity.toString().match(/^\d{1,}$/)){
+          error.quantity = 'Quantity must be a positive integer'
+        }
+        break
+    }
+    return error
+  }
 
-  handleBlur = (event) => {}
+  clearErrors = (name, value) => {
+    let errors = { ...this.state.errors }
+
+    switch(name){
+      case 'name':
+        if(value.length > 0){
+          delete errors['name']
+        }
+        break
+      case 'description':
+        if(value.length > 0){
+          delete errors['description']
+        }
+        break
+      case 'price':
+        if(parseFloat(value) > 0.0 || value.match(/^\d{1,}(\.\d{0,2})?$/)){
+          delete errors['price']
+        }
+        break
+      case 'quantity':
+        if(parseInt(value, 10) > 0 || value.match(/^\d{1,}$/)){
+          delete errors['quantity']
+        }
+        break
+      default:
+    }
+    this.setState({ errors })
+  }
+
+  handleBlur = (event) => {
+    const { name } = event.target
+    const fieldError = this.checkErrors(this.state, name)
+    const errors = Object.assign({}, this.state.errors, fieldError)
+    this.setState({ errors })
+  }
 
 
   render(){
