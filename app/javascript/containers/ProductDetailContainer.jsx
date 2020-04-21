@@ -10,11 +10,22 @@ class ProductDetail extends React.Component {
 
     this.state = {
       product: {},
-      editing: false
+      editing: false,
+      updated: false
     }
   }
 
   componentDidMount(){
+    this.getProduct()
+  }
+
+  componentDidUpate = () => {
+    if(this.state.editing && this.state.updated){
+      this.getProduct()
+    }
+  }
+
+  getProduct = () => {
     const id = this.props.match && this.props.match.params.id
 
     axios
@@ -24,6 +35,10 @@ class ProductDetail extends React.Component {
         console.log(response.data.product)
       })
       .catch(error => console.log(error.response))
+  }
+
+  setUpdated = (value) => {
+    this.setState({updated: value})
   }
 
   editingProduct = (value) => {
@@ -80,7 +95,11 @@ class ProductDetail extends React.Component {
         }
           </div>
           <Route path="/products/:id/edit" render={(props) => (
-            <EditProductForm {...props} onEdit={this.editingProduct} />
+            <EditProductForm
+              {...props}
+              onEdit={this.editingProduct}
+              onUpdate={this.setUpdated}
+            />
           )} />
         </div>
       </div>

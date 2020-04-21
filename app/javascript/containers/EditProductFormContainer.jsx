@@ -24,6 +24,16 @@ class EditProductForm extends Component {
     }
   }
 
+  componentWillUnmount = () => {
+    const id = this.props.match && this.props.match.params.id
+    id && this.props.onEdit('edited')
+    this.props.onUpdate(false)
+
+    if(this.state.serverErrors.length > 0){
+      this.resetSaved()
+    }
+  }
+
   getProduct = (id) => {
     axios
       .get(`/api/v1/products/${id}.json`)
@@ -197,6 +207,11 @@ class EditProductForm extends Component {
       </div>
     )
   }
+}
+
+EditProductForm.propTypes = {
+  onEdit: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired
 }
 
 
