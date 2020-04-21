@@ -1,7 +1,7 @@
 class Api::V1::ProductsController < ApplicationController
   before_action :require_signin, except: [:index, :show]
   before_action :find_product, only: [:show, :edit, :update, :destroy]
-  # before_action :require_owner, only: [:edit, :update, :destroy]
+  before_action :require_owner, only: [:edit, :update, :destroy]
 
   def index
     @products = Product.all
@@ -37,8 +37,7 @@ class Api::V1::ProductsController < ApplicationController
 
   def require_owner
     unless @product.owned_by?(current_user)
-      flash[:alert] = 'Access denied'
-      redirect_to root_path
+      render json: { error: 'Access denied' }, status: 403
     end
   end
 

@@ -81,7 +81,7 @@ class ProductDetail extends React.Component {
               {product.description}
             </div>
 
-          {this.isOwner(currentUser, product) ?
+          {this.isOwner(currentUser, product) && !this.state.editing ?
 
           <React.Fragment>
             <div className="float-right btn-edit-del">
@@ -94,13 +94,16 @@ class ProductDetail extends React.Component {
           </React.Fragment> : null
         }
           </div>
-          <Route path="/products/:id/edit" render={(props) => (
-            <EditProductForm
-              {...props}
-              onEdit={this.editingProduct}
-              onUpdate={this.setUpdated}
-            />
-          )} />
+          {this.isOwner(currentUser, product) ?
+
+            <Route path="/products/:id/edit" render={(props) => (
+              <EditProductForm
+                {...props}
+                onEdit={this.editingProduct}
+                onUpdate={this.setUpdated}
+              />
+            )} /> : null
+        }
         </div>
       </div>
     )
