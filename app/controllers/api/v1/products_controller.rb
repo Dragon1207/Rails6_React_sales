@@ -22,12 +22,8 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def update
-    if @product.update(product_params)
-      flash[:notice] = 'Product has been updated'
-      redirect_to root_path
-    else
-      flash.now[:alert] = 'There was an error, please try again'
-      render :edit
+    unless @product.update(product_params)
+      render json: @product.errors.full_messages, status: :unprocessable_entity
     end
   end
 

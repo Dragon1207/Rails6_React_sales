@@ -93,7 +93,7 @@ class EditProductForm extends Component {
       product: { ...data }
     }
     axios
-      .put(`/api/v1/products/${data/id}.json`, updatedProduct)
+      .put(`/api/v1/products/${data.id}.json`, updatedProduct)
       .then(response => {
         const { product } = response.data
         this.setState({
