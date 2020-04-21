@@ -34,7 +34,7 @@ class ProductDetail extends React.Component {
         this.setState({product: response.data.product})
         console.log(response.data.product)
       })
-      .catch(error => console.log(error.response))
+      .catch(error => this.props.history.push('/'))
   }
 
   setUpdated = (value) => {
