@@ -28,9 +28,7 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy
-    flash[:alert] = 'Product has been deleted'
-    redirect_to root_path
+    @product.destroy    
   end
 
   private
