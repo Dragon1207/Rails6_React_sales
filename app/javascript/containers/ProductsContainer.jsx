@@ -23,6 +23,22 @@ class ProductList extends React.Component {
     }
     return true
   }
+
+  // How to display error message to screen:
+  // 1. Test to see if error message is not added to the state
+  // 2. Make sure the prop, this.props.history.location.state is not null
+  // 3. Set state with error message
+  // 4. Clear it from route's history - this is to ensure that you don't get error message over and over again
+
+  componentDidUpdate = () => {
+    if(!this.state.flash && this.props.history.location.state){
+      const flashMsg = this.props.history.location.state.error
+      this.setState({ flash: flashMsg }, () => {
+        this.props.history.replace('/', null)
+      })
+    }
+  }
+
   loadProductsFromServer = () => {
     axios
       .get('/api/v1/products.json')
@@ -72,6 +88,12 @@ class ProductList extends React.Component {
       serverErrors: []
     })
   }
+
+  // 1. The server error messages have to be displayed
+  // 2. The form fields don't have to be cleared of the data
+  // 3. Re-save the data when errors are fixed
+  // 4. Set a flag to indicate status of the save action
+  // 5. Clear the form fields only when the data is saved successfully
 
   render(){
     const { products } = this.state

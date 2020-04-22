@@ -34,7 +34,10 @@ class ProductDetail extends React.Component {
         this.setState({product: response.data.product})
         console.log(response.data.product)
       })
-      .catch(error => this.props.history.push('/'))
+      .catch(error => this.props.history.push({
+        pathname: '/',
+        state: { error: error.response.data.error }
+      }))
   }
 
   setUpdated = (value) => {
@@ -61,6 +64,7 @@ class ProductDetail extends React.Component {
     const { product } = this.state
     const { currentUser } = this.props
 
+    console.log(this.props)
 
     return (
       <div className="container">
