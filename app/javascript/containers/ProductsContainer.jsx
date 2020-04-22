@@ -111,7 +111,7 @@ class ProductList extends React.Component {
             <ErrorMessages
               errors={[this.state.flash]}
               flash={true}
-              colWidth="col-dm-12"
+              colWidth="col-md-10 offset-md-1"
             />
           </div>
         }
