@@ -4,6 +4,7 @@ import axios from 'axios'
 import Product from '../components/products/Product'
 import Jumbotron from '../components/products/Jumbotron'
 import NewProductForm from '../components/products/NewProductForm'
+import ErrorMessages from '../components/shared/ErrorMessages'
 
 class ProductList extends React.Component {
 
@@ -105,6 +106,15 @@ class ProductList extends React.Component {
     return (
       <React.Fragment>
         <Jumbotron />
+        {this.state.flash &&
+          <div className="row">
+            <ErrorMessages
+              errors={[this.state.flash]}
+              flash={true}
+              colWidth="col-dm-12"
+            />
+          </div>
+        }
         <div className="container">
           <div className="row">
             <div className="col-md-12 mb-2">
