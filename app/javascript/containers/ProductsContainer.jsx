@@ -5,6 +5,8 @@ import Product from '../components/products/Product'
 import Jumbotron from '../components/products/Jumbotron'
 import NewProductForm from '../components/products/NewProductForm'
 import ErrorMessages from '../components/shared/ErrorMessages'
+import ErrorMessagesHOC from '../components/shared/ErrorMessagesHOC'
+
 
 class ProductList extends React.Component {
 
@@ -108,7 +110,7 @@ class ProductList extends React.Component {
         <Jumbotron />
         {this.state.flash &&
           <div className="row">
-            <ErrorMessages
+            <ErrorMessagesHOC
               errors={[this.state.flash]}
               flash={true}
               colWidth="col-md-10 offset-md-1"
