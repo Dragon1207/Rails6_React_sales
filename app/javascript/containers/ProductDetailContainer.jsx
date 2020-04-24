@@ -2,7 +2,10 @@ import React from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import { Link, Route } from 'react-router-dom'
-import EditProductForm from './EditProductFormContainer'
+
+import NewProductForm from '../components/products/NewProductForm'
+import CommentList from '../components/comments/CommentList'
+
 
 class ProductDetail extends React.Component {
   constructor(props){
@@ -11,7 +14,8 @@ class ProductDetail extends React.Component {
     this.state = {
       product: {},
       editing: false,
-      updated: false
+      updated: false,
+      comments: [],
     }
   }
 
@@ -123,6 +127,9 @@ class ProductDetail extends React.Component {
             )} /> : null
         }
         </div>
+
+        <hr />
+        <CommentList comments={this.state.comments} />
       </div>
     )
   }
