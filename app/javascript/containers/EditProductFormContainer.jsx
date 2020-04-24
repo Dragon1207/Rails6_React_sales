@@ -4,7 +4,8 @@ import axios from 'axios'
 
 import ErrorMessages from '../components/shared/ErrorMessages'
 import ProductForm from '../components/products/ProductForm'
-import { verifyAndSetFieldErrors } from '../shared/helpers'
+import withProductForm from '../components/products/WithProductForm'
+// import { verifyAndSetFieldErrors } from '../shared/helpers'
 
 class EditProductForm extends Component {
   state = {
@@ -37,15 +38,19 @@ class EditProductForm extends Component {
         const idx = product.price.search(/\d/)
         product.price = product.price.slice(idx)
 
-        this.setState({
-          id: product.id,
-          name: product.name,
-          description: product.description,
-          price: product.price,
-          quantity: product.quantity
-        }, () => {
+        this.props.onSetFields(product, () => {
           this.props.onEdit()
         })
+
+        // this.setState({
+        //   id: product.id,
+        //   name: product.name,
+        //   description: product.description,
+        //   price: product.price,
+        //   quantity: product.quantity
+        // }, () => {
+        //   this.props.onEdit()
+        // })
       })
       .catch(error => console.log(error))
   }
@@ -96,10 +101,11 @@ class EditProductForm extends Component {
       .then(response => {
         const { product } = response.data
         this.setState({
-          ...product,
+
           serverErrors: [],
           saved: true
         }, () => {
+          this.props.onSetFields(product)
           this.props.onUpdate(true)
           this.props.history.push(`/products/${data.id}`)
         })
@@ -195,9 +201,9 @@ class EditProductForm extends Component {
             <h1 className="text-center form-header-style pt-2 pb-3"> { title } </h1>
             <ProductForm
               onSubmit={this.handleSubmit}
-              state={this.state}
-              onChange={this.handleChange}
-              onBlur={this.handleBlur}
+              state={this.props.state}
+              onChange={this.props.onChange}
+              onBlur={this.props.onBlur}
               buttonText={buttonText}
             />
             </div>
@@ -214,4 +220,4 @@ EditProductForm.propTypes = {
 }
 
 
-export default EditProductForm
+export default withProductForm(EditProductForm)

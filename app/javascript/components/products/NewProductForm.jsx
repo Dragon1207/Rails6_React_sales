@@ -4,106 +4,26 @@ import PropTypes from 'prop-types'
 import ErrorMessages from '../shared/ErrorMessages'
 import ProductForm from './ProductForm'
 import withProductForm from './WithProductForm'
-import { verifyAndSetFieldErrors } from '../../shared/helpers'
+// import { verifyAndSetFieldErrors } from '../../shared/helpers'
 
 class NewProductForm extends Component {
 
 
     componentDidUpdate = () => {
       if(this.props.saved){
-        this.setState({
-          name: '',
-          price: '',
-          description: '',
-          quantity: ''
-        })
+        this.props.onSetFields()
+        // this.setState({
+        //   name: '',
+        //   price: '',
+        //   description: '',
+        //   quantity: ''
+        // })
         this.props.onResetSaved()
       }
     }
 
-  handleSubmit = (event) => {
-    event.preventDefault()
-
-    const fieldNames = ["name", "description", "price", "quantity"]
-    verifyAndSetFieldErrors(this, fieldNames)
-
-    if(Object.keys(this.state.errors).length === 0){
-      const { name, description, price, quantity } = this.state
-
-      const newProduct = { name, description, price, quantity }
-      this.props.onSubmit(newProduct)
-  }
-
-}
 
 
-  handleChange = (event) => {
-    const { name, value } = event.target
-    this.setState({ [name]: value })
-    this.clearErrors(name, value)
-  }
-
-  clearErrors = (name, value) => {
-    let errors = { ...this.state.errors }
-
-    switch(name){
-      case 'name':
-        if(value.length > 0){
-          delete errors['name']
-        }
-        break
-      case 'description':
-        if(value.length > 0){
-          delete errors['description']
-        }
-        break
-      case 'price':
-        if(parseFloat(value) > 0.0 || value.match(/^\d{1,}(\.\d{0,2})?$/)){
-          delete errors['price']
-        }
-        break
-      case 'quantity':
-        if(parseInt(value, 10) > 0 || value.match(/^\d{1,}$/)){
-          delete errors['quantity']
-        }
-        break
-      default:
-    }
-    this.setState({ errors })
-  }
-  checkErrors = (state, fieldName) => {
-    const error = {}
-
-    switch (fieldName){
-      case 'name':
-        if(!state.name){
-          error.name = 'Please provide a name'
-        }
-        break
-      case 'description':
-        if(!state.description){
-          error.description = 'Please provide a description'
-        }
-        break
-      case 'price':
-        if(parseFloat(state.price) <= 0.0 || !state.price.toString().match(/^\d{1,}(\.\d{0,2})?$/)){
-          error.price = 'Price must be a positive number'
-        }
-        break
-      case 'quantity':
-        if(parseInt(state.quantity, 10) <= 0 || !state.quantity.toString().match(/^\d{1,}$/)){
-          error.quantity = 'Quantity must be a positive integer'
-        }
-        break
-    }
-    return error
-  }
-  handleBlur = (event) => {
-    const { name } = event.target
-    const fieldError = this.checkErrors(this.state, name)
-    const errors = Object.assign({}, this.state.errors, fieldError)
-    this.setState({ errors })
-  }
   render(){
     const buttonText = "Create Product"
     const title = "Add New Product"
@@ -118,11 +38,12 @@ class NewProductForm extends Component {
                 {title}
               </h1>
 
-              <ProductForm onSubmit={this.handleSubmit}
-              onChange={this.handleChange}
-              onBlur={this.handleBlur}
-              state={this.state}
-              buttonText={buttonText}
+              <ProductForm
+                onSubmit={this.props.onSubmit}
+                onChange={this.props.onChange}
+                onBlur={this.props.onBlur}
+                state={this.props.state}
+                buttonText={buttonText}
               />
 
 
@@ -143,4 +64,4 @@ NewProductForm.propTypes = {
   onResetSaved: PropTypes.func.isRequired
 }
 
-export default NewProductForm
+export default withProductForm(NewProductForm)

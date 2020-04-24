@@ -108,9 +108,28 @@ const withProductForm = (Component) => {
         this.setState({ errors })
       }
 
+      setFields = (product, cb) => {
+        this.setState({
+          fields: {
+            id: product ? product.id : '',
+            name: product ? product.name : '',
+            price: product ? product.price : '',
+            description: product ? product.description : '',
+            quantity: product ? product.quantity : '',
+          }
+        }, cb ? cb() : null)
+      }
+
     render(){
       return (
-        <Component {...this.props} />
+        <Component
+          {...this.props}
+          onSubmit={this.handleSubmit}
+          onChange={this.handleChange}
+          onBlur={this.handleBlur}
+          onSetFields={this.setFields}
+          state={this.state}
+        />
       )
     }
   }

@@ -12,7 +12,7 @@ const ProductForm = (props) => (
   title="Name"
   type="text"
   name="name"
-  value={props.state.name}
+  value={props.state.fields.name}
   onChange={props.onChange}
   onBlur={props.onBlur}
   placeholder="Item name"
@@ -24,7 +24,7 @@ const ProductForm = (props) => (
   title="Price"
   type="text"
   name="price"
-  value={props.state.price}
+  value={props.state.fields.price}
   onChange={props.onChange}
   onBlur={props.onBlur}
   placeholder="Item price"
@@ -36,7 +36,7 @@ const ProductForm = (props) => (
   title="Quantity"
   type="number"
   name="quantity"
-  value={props.state.quantity}
+  value={props.state.fields.quantity}
   onChange={props.onChange}
   onBlur={props.onBlur}
   placeholder="Item quantity"
@@ -47,7 +47,7 @@ const ProductForm = (props) => (
   <TextArea
   title="Description"
   name="description"
-  value={props.state.description}
+  value={props.state.fields.description}
   rows="5"
   onChange={props.onChange}
   onBlur={props.onBlur}
@@ -60,7 +60,7 @@ const ProductForm = (props) => (
   title="Image"
   type="file"
   name="image"
-  value={props.state.image}
+  value={props.state.fields.image}
   onChange={props.onChange}
   onBlur={props.onBlur}
   placeholder="Item image"
