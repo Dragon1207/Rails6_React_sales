@@ -3,17 +3,11 @@ import PropTypes from 'prop-types'
 
 import ErrorMessages from '../shared/ErrorMessages'
 import ProductForm from './ProductForm'
+import withProductForm from './WithProductForm'
 import { verifyAndSetFieldErrors } from '../../shared/helpers'
 
 class NewProductForm extends Component {
 
-    state = {
-      name: '',
-      description: '',
-      price: '',
-      quantity: '',
-      errors: {}
-      }
 
     componentDidUpdate = () => {
       if(this.props.saved){

@@ -8,11 +8,6 @@ import { verifyAndSetFieldErrors } from '../shared/helpers'
 
 class EditProductForm extends Component {
   state = {
-    name: '',
-    description: '',
-    price: '',
-    quantity: '',
-    errors: {},
     serverErrors: [],
     saved: false
   }
@@ -62,30 +57,34 @@ class EditProductForm extends Component {
     })
   }
 
-  handleChange = (event) => {
-    const { name, value } = event.target
-    this.setState({ [name]: value })
-    this.clearErrors(name, value)
-  }
+  // handleChange = (event) => {
+  //   const { name, value } = event.target
+  //   this.setState({ [name]: value })
+  //   this.clearErrors(name, value)
+  // }
+
+  // handleSubmit = (event) => {
+  //   event.preventDefault()
+  //
+  //   const fieldNames = ['name', 'description', 'price', 'quantity']
+  //   verifyAndSetFieldErrors(this, fieldNames)
+  //
+  //   if(Object.keys(this.state.errors).length === 0){
+  //     const { id, name, description, price, quantity } = this.state
+  //     const editedProduct = {
+  //       id,
+  //       name,
+  //       description,
+  //       price: parseFloat(price),
+  //       quantity: parseInt(quantity, 10)
+  //     }
+  //     this.handleProductUpdate(editedProduct)
+  //   }
+  //
+  // }
 
   handleSubmit = (event) => {
-    event.preventDefault()
-
-    const fieldNames = ['name', 'description', 'price', 'quantity']
-    verifyAndSetFieldErrors(this, fieldNames)
-
-    if(Object.keys(this.state.errors).length === 0){
-      const { id, name, description, price, quantity } = this.state
-      const editedProduct = {
-        id,
-        name,
-        description,
-        price: parseFloat(price),
-        quantity: parseInt(quantity, 10)
-      }
-      this.handleProductUpdate(editedProduct)
-    }
-
+    this.props.onSubmit(event, this.handleProductUpdate)
   }
 
   handleProductUpdate = (data) => {
@@ -116,69 +115,69 @@ class EditProductForm extends Component {
       })
   }
 
-  checkErrors = (state, fieldName) => {
-    const error = {}
-
-    switch (fieldName){
-      case 'name':
-        if(!state.name){
-          error.name = 'Please provide a name'
-        }
-        break
-      case 'description':
-        if(!state.description){
-          error.description = 'Please provide a description'
-        }
-        break
-      case 'price':
-        if(parseFloat(state.price) <= 0.0 || !state.price.toString().match(/^\d{1,}(\.\d{0,2})?$/)){
-          error.price = 'Price must be a positive number'
-        }
-        break
-      case 'quantity':
-        if(parseInt(state.quantity, 10) <= 0 || !state.quantity.toString().match(/^\d{1,}$/)){
-          error.quantity = 'Quantity must be a positive integer'
-        }
-        break
-    }
-    return error
-  }
-
-  clearErrors = (name, value) => {
-    let errors = { ...this.state.errors }
-
-    switch(name){
-      case 'name':
-        if(value.length > 0){
-          delete errors['name']
-        }
-        break
-      case 'description':
-        if(value.length > 0){
-          delete errors['description']
-        }
-        break
-      case 'price':
-        if(parseFloat(value) > 0.0 || value.match(/^\d{1,}(\.\d{0,2})?$/)){
-          delete errors['price']
-        }
-        break
-      case 'quantity':
-        if(parseInt(value, 10) > 0 || value.match(/^\d{1,}$/)){
-          delete errors['quantity']
-        }
-        break
-      default:
-    }
-    this.setState({ errors })
-  }
-
-  handleBlur = (event) => {
-    const { name } = event.target
-    const fieldError = this.checkErrors(this.state, name)
-    const errors = Object.assign({}, this.state.errors, fieldError)
-    this.setState({ errors })
-  }
+  // checkErrors = (state, fieldName) => {
+  //   const error = {}
+  //
+  //   switch (fieldName){
+  //     case 'name':
+  //       if(!state.name){
+  //         error.name = 'Please provide a name'
+  //       }
+  //       break
+  //     case 'description':
+  //       if(!state.description){
+  //         error.description = 'Please provide a description'
+  //       }
+  //       break
+  //     case 'price':
+  //       if(parseFloat(state.price) <= 0.0 || !state.price.toString().match(/^\d{1,}(\.\d{0,2})?$/)){
+  //         error.price = 'Price must be a positive number'
+  //       }
+  //       break
+  //     case 'quantity':
+  //       if(parseInt(state.quantity, 10) <= 0 || !state.quantity.toString().match(/^\d{1,}$/)){
+  //         error.quantity = 'Quantity must be a positive integer'
+  //       }
+  //       break
+  //   }
+  //   return error
+  // }
+  //
+  // clearErrors = (name, value) => {
+  //   let errors = { ...this.state.errors }
+  //
+  //   switch(name){
+  //     case 'name':
+  //       if(value.length > 0){
+  //         delete errors['name']
+  //       }
+  //       break
+  //     case 'description':
+  //       if(value.length > 0){
+  //         delete errors['description']
+  //       }
+  //       break
+  //     case 'price':
+  //       if(parseFloat(value) > 0.0 || value.match(/^\d{1,}(\.\d{0,2})?$/)){
+  //         delete errors['price']
+  //       }
+  //       break
+  //     case 'quantity':
+  //       if(parseInt(value, 10) > 0 || value.match(/^\d{1,}$/)){
+  //         delete errors['quantity']
+  //       }
+  //       break
+  //     default:
+  //   }
+  //   this.setState({ errors })
+  // }
+  //
+  // handleBlur = (event) => {
+  //   const { name } = event.target
+  //   const fieldError = this.checkErrors(this.state, name)
+  //   const errors = Object.assign({}, this.state.errors, fieldError)
+  //   this.setState({ errors })
+  // }
 
 
   render(){
