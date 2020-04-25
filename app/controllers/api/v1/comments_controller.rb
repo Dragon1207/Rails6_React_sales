@@ -3,7 +3,7 @@ class Api::V1::CommentsController < ApplicationController
   before_action :set_product
 
   def index
-    @comments = @product.comments
+    @comments = @product.comments if @product
   end
 
   def create
