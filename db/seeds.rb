@@ -42,3 +42,5 @@ products = Product.create([
     user_id: john.id
   }
 ])
+
+comment = Comment.create!(body: 'Very nice product indeed', product: products.first, user: 'John')
