@@ -36,4 +36,8 @@ class CommentList extends Component {
   }
 }
 
+CommentList.propTypes = {
+  comments: PropTypes.array
+}
+
 export default CommentList

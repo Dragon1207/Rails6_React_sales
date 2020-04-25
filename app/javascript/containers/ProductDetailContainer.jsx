@@ -20,28 +20,37 @@ class ProductDetail extends React.Component {
   }
 
   componentDidMount(){
-    this.getProduct()
+    this.getProductAndComments()
   }
 
   componentDidUpate = () => {
     if(this.state.editing && this.state.updated){
-      this.getProduct()
+      this.getProductAndComments()
     }
   }
 
-  getProduct = () => {
+  getProductAndComments = () => {
     const id = this.props.match && this.props.match.params.id
 
-    axios
-      .get(`/api/v1/products/${id}.json`)
-      .then(response => {
-        this.setState({product: response.data.product})
-        console.log(response.data.product)
-      })
-      .catch(error => this.props.history.push({
-        pathname: '/',
-        state: { error: error.response.data.error }
-      }))
+    if(id){
+      axios
+        .all([
+          axios.get(`/api/v1/products/${id}.json`),
+          axios.get(`/api/v1/products/${id}/comments.json`)
+        ])
+        .then(axios.spread((productResponse, commentsResponse) => {
+          this.setState({
+            product: productResponse.data.product,
+            comments: commentsResponse.data.comments
+          })
+        }))
+        .catch(error => {
+          this.props.history.push({
+            pathname: '/',
+            state: { error: error.response.data.error }
+          })
+        })
+    }
   }
 
   setUpdated = (value) => {
@@ -129,7 +138,10 @@ class ProductDetail extends React.Component {
         </div>
 
         <hr />
-        <CommentList comments={this.state.comments} />
+        {!this.state.editing ?
+          <CommentList comments={this.state.comments} /> : null
+        }
+
       </div>
     )
   }
