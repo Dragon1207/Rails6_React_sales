@@ -12,6 +12,7 @@ class CommentList extends Component {
     if(!comments || comments.length === 0){
       return (
         <div className="container">
+        <CommentForm />
           <div className="row">
             <div className="col-md-10 offset-md-1 mt-4">
               <h2 className="comment-header text-center">No Comments Yet</h2>

@@ -22,7 +22,39 @@ class CommentForm extends Component {
     })
   }
 
-  handleBlur = (event) => {}
+  handleBlur = (event) => {
+    const { name } = event.target
+    const fieldError = this.checkErrors(this.state, name)
+    const errors = Object.assign({}, this.state.errors, fieldError)
+    this.setState({ errors })
+  }
+
+  checkErrors = (state, fieldName) => {
+    const error = {}
+    switch (fieldName){
+      case 'body':
+        if(!state.body){
+          error.body = 'Please provide comment body'
+        }
+        break
+      default:
+    }
+    return error
+  }
+
+  clearError = (name, value) => {
+    let errors = { ...this.state.errors }
+
+    switch (name){
+      case 'body':
+        if(value.length > 0){
+          delete errors['body']
+        }
+        break
+      default:
+    }
+    this.setState({ errors })
+  }
 
   render(){
     return (
