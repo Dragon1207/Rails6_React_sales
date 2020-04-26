@@ -14,12 +14,23 @@ class CommentForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
+
+    const fieldNames = ['description']
+    verifyAndSetFieldErrors(this, fieldNames)
+
+    if(Object.keys(this.state.errors).length === 0){
+      const comment = {
+        body: this.state.body.trim
+      }
+      const payload = { comment }
+      this.props.onCommentSubmit(payload)
+    }
   }
 
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value
-    })
+    const { name, value } = event.target
+    this.setState({ [name]: value })
+    this.clearErrors(name, value)
   }
 
   handleBlur = (event) => {
