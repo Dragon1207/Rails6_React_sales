@@ -12,7 +12,12 @@ class CommentList extends Component {
     if(!comments || comments.length === 0){
       return (
         <div className="container">
-        <CommentForm />
+        <CommentForm
+          onCommentSubmit={this.props.onCommentSubmit}
+          serverErrors={this.props.serverErrors}
+          saved={this.props.saved}
+          onResetSaved={this.props.onResetSaved}
+        />
           <div className="row">
             <div className="col-md-10 offset-md-1 mt-4">
               <h2 className="comment-header text-center">No Comments Yet</h2>
@@ -27,6 +32,7 @@ class CommentList extends Component {
     ))
     return (
       <div className="container">
+        <CommentForm />
         <div className="row">
           <div className="col-md-10 offset-md-1 mt-4">
             <h2 className="comment-header">Customer comments ({ comments && comments.length })</h2>
@@ -39,7 +45,11 @@ class CommentList extends Component {
 }
 
 CommentList.propTypes = {
-  comments: PropTypes.array
+  comments: PropTypes.array,
+  onCommentSubmit: PropTypes.func.isRequired,
+  serverErrors: PropTypes.array.isRequired,
+  saved: PropTypes.bool.isRequired,
+  onResetSaved: PropTypes.func
 }
 
 export default CommentList

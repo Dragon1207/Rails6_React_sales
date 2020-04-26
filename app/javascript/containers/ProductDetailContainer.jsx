@@ -53,16 +53,17 @@ class ProductDetail extends React.Component {
     }
   }
 
-  setUpdated = (value) => {
-    this.setState({updated: value})
-  }
 
   editingProduct = (value) => {
     if(value == undefined){
       this.setState({ editing: true })
     } else if(value === "edited"){
-      this.setState({ eidting: false })
+      this.setState({ editing: false })
     }
+  }
+
+  setUpdated = (value) => {
+    this.setState({updated: value})
   }
 
   isOwner = (user, product) => {
@@ -75,6 +76,19 @@ class ProductDetail extends React.Component {
   handleDelete = (event) => {
     event.preventDefault()
     this.handleProductDelete(this.props.match.params.id)
+  }
+
+  handleCommentSubmit = (data) => {
+    const id = +this.props.match.params.id
+    axios
+      .post(`/api/v1/products/${id/comments.json}`, data)
+      .then(response => {
+        const comments = [response.data.comment, ...this.state.comments]
+        this.setState({ comments })
+      })
+      .catch(error => (
+        this.setState({ serverErrors: error.response.data })
+      ))
   }
 
   handleProductDelete = (id) => {
@@ -128,7 +142,7 @@ class ProductDetail extends React.Component {
           {this.isOwner(currentUser, product) ?
 
             <Route path="/products/:id/edit" render={(props) => (
-              <EditProductForm
+              <NewProductForm
                 {...props}
                 onEdit={this.editingProduct}
                 onUpdate={this.setUpdated}
@@ -139,7 +153,13 @@ class ProductDetail extends React.Component {
 
         <hr />
         {!this.state.editing ?
-          <CommentList comments={this.state.comments} /> : null
+          <CommentList
+            comments={this.state.comments}
+            onCommentSubmit={this.handleCommentSubmit}
+            serverErrors={this.state.serverErrors}
+            saved={this.state.saved}
+            onResetSaved={this.resetSaved}
+          /> : null
         }
 
       </div>

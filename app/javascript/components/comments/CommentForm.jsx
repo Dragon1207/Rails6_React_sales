@@ -12,6 +12,19 @@ class CommentForm extends Component {
     errors: {}
   }
 
+  componentDidUpdate = () => {
+    if(this.props.saved){
+      this.setState({ body: '' })
+      this.props.onResetSaved()
+    }
+  }
+
+  componentWillunmount = () => {
+    if(this.props.serverErrors.length > 0){
+      this.props.onResetSaved()
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault()
 
@@ -20,7 +33,7 @@ class CommentForm extends Component {
 
     if(Object.keys(this.state.errors).length === 0){
       const comment = {
-        body: this.state.body.trim
+        body: this.state.body.trim()
       }
       const payload = { comment }
       this.props.onCommentSubmit(payload)
@@ -53,7 +66,7 @@ class CommentForm extends Component {
     return error
   }
 
-  clearError = (name, value) => {
+  clearErrors = (name, value) => {
     let errors = { ...this.state.errors }
 
     switch (name){
@@ -71,11 +84,15 @@ class CommentForm extends Component {
     return (
       <div className="container mt-4">
         <div className="row">
+          {this.props.serverErrors && this.props.serverErrors.length > 0 &&
+            <ErrorMessages errors={this.props.serverErrors} />
+
+          }
           <div className="col-md-10 offset-md-1">
-            <h1 className="text-center form-header-style mt-5 pt-2 pb-3">
+            <h1 className="text-center form-header-style mt-5 pt-2 pb-3">
               Add New Comment
             </h1>
-            <div className="form-body-style px-5 pt-4">
+           
               <Form onSubmit={this.handleSubmit}>
                 <TextArea
                   title="Description"
@@ -90,7 +107,7 @@ class CommentForm extends Component {
                 />
                 <Button>Create Comment</Button>
               </Form>
-            </div>
+           
           </div>
         </div>
       </div>
