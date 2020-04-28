@@ -168,7 +168,7 @@ class ProductDetail extends React.Component {
             serverErrors={this.state.serverErrors}
             saved={this.state.saved}
             onResetSaved={this.resetSaved}
-            currentUser={this.currentUser}
+            currentUser={currentUser}
           /> : null
         }
 
