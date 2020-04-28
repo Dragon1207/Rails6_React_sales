@@ -16,6 +16,8 @@ class ProductDetail extends React.Component {
       editing: false,
       updated: false,
       comments: [],
+      saved: false,
+      serverErrors: []
     }
   }
 
@@ -98,6 +100,13 @@ class ProductDetail extends React.Component {
         this.props.history.push('/')
       })
       .catch(error => console.log(error))
+  }
+
+  resetSaved = () => {
+    this.setState({
+      saved: false,
+      serverErrors: []
+    })
   }
 
   render(){

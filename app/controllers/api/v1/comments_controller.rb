@@ -9,13 +9,10 @@ class Api::V1::CommentsController < ApplicationController
   def create
     @comment = @product.comments.build(comment_params)
     @comment.user = current_user
-    if @comment.save
-      flash[:notice] = 'Comment has been posted'
-      redirect_to @product
-    else
-      @comments = @product.comments
-      flash.now[:alert] = 'Comment not created'
-      render 'products/show'
+
+    unless @comment.save
+      render json: @comment.errors.full_messages,
+      status: :unprocessable_entity
     end
   end
 
