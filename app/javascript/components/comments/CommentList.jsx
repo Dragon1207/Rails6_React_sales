@@ -6,18 +6,22 @@ import CommentForm from './CommentForm'
 
 class CommentList extends Component {
   render(){
-    const { comments } = this.props
+    const { comments, currentUser } = this.props
     let commentList = null
+
+    const commentForm = currentUser ? (
+      <CommentForm
+        onCommentSubmit={this.props.onCommentSubmit}
+        serverErrors={this.props.serverErrors}
+        saved={this.props.saved}
+        onResetSaved={this.props.onResetSaved}
+      />
+    ) : null
 
     if(!comments || comments.length === 0){
       return (
         <div className="container">
-        <CommentForm
-          onCommentSubmit={this.props.onCommentSubmit}
-          serverErrors={this.props.serverErrors}
-          saved={this.props.saved}
-          onResetSaved={this.props.onResetSaved}
-        />
+          { commentForm }
           <div className="row">
             <div className="col-md-10 offset-md-1 mt-4">
               <h2 className="comment-header text-center">No Comments Yet</h2>
@@ -30,9 +34,11 @@ class CommentList extends Component {
     commentList = comments && comments.map(comment => (
       <Comment key={comment.id} comment={comment} />
     ))
+
     return (
       <div className="container">
-        <CommentForm />
+      <CommentForm />
+        { commentForm }
         <div className="row">
           <div className="col-md-10 offset-md-1 mt-4">
             <h2 className="comment-header">Customer comments ({ comments && comments.length })</h2>
@@ -49,7 +55,8 @@ CommentList.propTypes = {
   onCommentSubmit: PropTypes.func.isRequired,
   serverErrors: PropTypes.array.isRequired,
   saved: PropTypes.bool.isRequired,
-  onResetSaved: PropTypes.func
+  onResetSaved: PropTypes.func,
+  currentUser: PropTypes.object,
 }
 
 export default CommentList
